@@ -1,0 +1,69 @@
+---
+title: "Lab1"
+author: "Dan Groeneveld"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Tasks
+
+## Task 1
+
+
+The working directory
+
+```{r}
+getwd()
+```
+## Task 2
+
+Read in DDT data
+
+```{r}
+ddt <- read.csv("DDT.csv")
+head(ddt)
+```
+
+
+## Task 3
+
+  a. The qualitative variables are RIVER and SPECIES.
+  b. The quantitative variables are MILE, LENGTH, WEIGHT, and DDT.
+  
+```{r}
+sp <- ddt$SPECIES
+tab <- table(sp)
+barplot(tab,col = 1:3)
+```
+ 
+  c. There are three species in the ddt data set.
+  d.
+  
+```{r}
+bigfish <- with(ddt, ddt[WEIGHT>800 & SPECIES == "LMBASS",])
+head(bigfish)
+```
+
+  e.
+  
+```{r}
+bigddt <- with(ddt, ddt[RIVER == "SCM" & DDT>4.0,])
+head(bigddt)
+```
+
+## Task 4
+
+```{r}
+rtab <- with(ddt, table(RIVER))
+rtab
+barplot(rtab)
+```
+
+
