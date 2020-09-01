@@ -58,12 +58,141 @@ bigddt <- with(ddt, ddt[RIVER == "SCM" & DDT>4.0,])
 head(bigddt)
 ```
 
+## Clicker Questions
+
+  a. The mean length of fish in the ddt data frame is 43.
+```{r}
+len=with(ddt,LENGTH)
+mean(len)
+```
+  
+  b. The standard deviation of fish weight in the ddt data frame is 377.
+```{r}
+stdwgt=with(ddt,WEIGHT)
+sd(stdwgt)
+```
+
+  c. No, the plot pictured on the lab assignment has the reversed axis scales of the correct plot from the ddt data frame (pictured below).
+```{r}
+library(ggplot2)
+s = ggplot(ddt, aes(x = WEIGHT, y = LENGTH))
+ s = s + geom_point(aes(color= SPECIES)) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Length vs. Weight",
+       caption="Source: DDT.csv",
+       x="Weight",
+       y="Length")
+
+s
+```
+  
+  d. The last value is 1.00.
+```{r}
+v=1:20
+v/20
+```
+  1.00
+  
 ## Task 4
 
 ```{r}
 rtab <- with(ddt, table(RIVER))
 rtab
-barplot(rtab)
+barplot(rtab, col = 1:4)
 ```
+
+
+```{r}
+rivsp=with(ddt,table(RIVER,SPECIES))
+rivsp
+barplot(rivsp,beside=TRUE,col=rainbow(4))
+
+```
+
+
+## Task 5
+
+```{r}
+pie(tab, col=1:4)
+```
+
+```{r}
+pie(rtab, col=1:4)
+```
+
+## Task 6
+
+```{r}
+layout(matrix(c(1,2,3),nr=1,nc=3))# 1 row 3 cols
+
+with(ddt,boxplot(DDT,ylab="DDT",col="Red",notch=TRUE))
+with(ddt,boxplot(WEIGHT,ylab="WEIGHT",col="Green",notch=TRUE))
+with(ddt,boxplot(LENGTH,ylab="LENGTH",col="Blue",notch=TRUE))
+
+```
+
+## Task 7
+
+```{r}
+fishcol=with(ddt,ifelse(SPECIES=="CCATFISH","Red",
+                        ifelse(SPECIES=="SMBUFFALO","Blue","Green")))
+
+#River col
+rivcol=with(ddt, ifelse(RIVER=="FCM","Red",
+                        ifelse(RIVER=="LCM","Blue",
+                               ifelse(RIVER=="SCM","Green","Black"))))
+
+
+
+
+#Given the combinations of all levels of SPECIES and RIVER = RIVER*SPECIES
+coplot(LENGTH~WEIGHT|RIVER,data=ddt,col=rivcol)
+coplot(DDT~WEIGHT|SPECIES,data=ddt,col=fishcol)
+```
+
+## Task 8
+
+```{r}
+library(ggplot2)
+#library(ggpubr)
+#library(ggpmisc)
+g = ggplot(ddt, aes(x = LENGTH, y = WEIGHT )) + 
+  geom_point(aes( shape = SPECIES))
+
+
+lbyr <- c(12,13,14)*100
+
+ b = ggplot(ddt, aes(x = SPECIES, y = WEIGHT))
+ b = b + geom_boxplot(aes(fill= RIVER)) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Dan Groeneveld", 
+       caption="Source: DDT.csv",
+       x="Species",
+       y="Weight")
+
+b
+
+ v = ggplot(ddt, aes(x = RIVER, y = LENGTH))
+ v = v + geom_violin(aes(fill= SPECIES)) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Dan Groeneveld", 
+       caption="Source: DDT.csv",
+       x="River",
+       y="Length")
+
+v
+
+ s = ggplot(ddt, aes(x = WEIGHT, y = LENGTH))
+ s = s + geom_point(aes(color= SPECIES)) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Dan Groeneveld", 
+       caption="Source: DDT.csv",
+       x="Weight",
+       y="Length")
+
+s
+
+```
+
 
 
