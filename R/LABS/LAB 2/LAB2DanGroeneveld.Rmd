@@ -1,0 +1,69 @@
+---
+title: "Lab 2"
+author: "Dan Groeneveld"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Tasks
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+## Task 2
+```{r}
+mpgdf = read.csv('EPAGAS.csv')
+
+head(mpgdf)
+
+```
+
+## Task 3
+
+```{r}
+mpg = mpgdf$MPG
+z=(mpg-mean(mpg))/sd(mpg)
+mean(z)
+sd(z)
+mpg[abs(z)>=2 & abs(z)<=3]
+mpg[abs(z)>3]
+
+mycol = ifelse(abs(z)>3, "Red",
+        ifelse(abs(z)>=2 &abs(z)<=3,"Blue", "Black"))
+mypch = ifelse(abs(z)>3, 20,
+        ifelse(abs(z)>=2 &abs(z)<=3,21, 22))
+library(lattice)
+dotplot(mpg, col=mycol)
+```
+
+## Task 4
+
+```{r}
+boxplot(mpg,xlab="MPG",col="Black",notch = TRUE, horizontal = TRUE, main = "MPG Boxplot")
+```
+
+Chebyshev's Rule predicts at least 75% of the data will fall within two standard deviations of the mean.
+
+```{r}
+length(mpg[abs(z)<2])/length(mpg)
+```
+
+Yes, Chebyshev agrees with the data as 96% falls within two standard deviations of the mean.
+
+The Empirical Rule predicts 95% of the data will fall within two stand deviations of the mean.
+
+The Empirical Rule corresponds very well to the data as it predicted the correct ratio of data to one percent.
+
+The Empirical Rule is valid in this case because the data is roughly mound shaped and distributed symmetrically.
+
+
