@@ -30,27 +30,49 @@ head(mpgdf)
 
 ## Task 3
 
+Making the object mpg and transforming mpg to z:
 ```{r}
 mpg = mpgdf$MPG
 z=(mpg-mean(mpg))/sd(mpg)
+```
+
+Verifying results:
+```{r}
 mean(z)
 sd(z)
-mpg[abs(z)>=2 & abs(z)<=3]
-mpg[abs(z)>3]
+```
 
+
+
+The values of mpg that are possible outliers:
+```{r}
+mpg[abs(z)>=2 & abs(z)<=3]
+```
+
+The values of mpg that are defined as outliers:
+```{r}
+mpg[abs(z)>3]
+```
+
+```{r}
 mycol = ifelse(abs(z)>3, "Red",
         ifelse(abs(z)>=2 &abs(z)<=3,"Blue", "Black"))
 mypch = ifelse(abs(z)>3, 20,
         ifelse(abs(z)>=2 &abs(z)<=3,21, 22))
 library(lattice)
-dotplot(mpg, col=mycol)
+dotplot(mpg, col=mycol, main = "MPG Dotplot")
 ```
+
 
 ## Task 4
 
 ```{r}
 boxplot(mpg,xlab="MPG",col="Black",notch = TRUE, horizontal = TRUE, main = "MPG Boxplot")
 ```
+
+Chebyshev's Rule stats that at least 1 - 1/(k^2) percent of the data will fall within k standard deviations of the mean.
+
+Calculation: 1 - 1/(k^2) = 1- 1/(2^2) = 0.75
 
 Chebyshev's Rule predicts at least 75% of the data will fall within two standard deviations of the mean.
 
@@ -62,7 +84,12 @@ Yes, Chebyshev agrees with the data as 96% falls within two standard deviations 
 
 The Empirical Rule predicts 95% of the data will fall within two stand deviations of the mean.
 
-The Empirical Rule corresponds very well to the data as it predicted the correct ratio of data to one percent.
+The Empirical Rule corresponds very well to the data as it predicted the correct ratio of data within one percent.
+
+```{r}
+hist(mpg, col = 1:8)
+```
+
 
 The Empirical Rule is valid in this case because the data is roughly mound shaped and distributed symmetrically.
 
