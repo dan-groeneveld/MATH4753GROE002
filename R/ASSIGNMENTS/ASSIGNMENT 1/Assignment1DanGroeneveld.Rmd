@@ -54,13 +54,33 @@ coplot(LENGTH~WEIGHT|RIVER*SPECIES,data=ddt,col=m, pch=21)
 
 ## 3-National Bridge Inventory
 
-  a. Quantitative
-  b. Quantitative
-  c. Qualitative
-  d. Quantitative
-  e. Qualitative
-  f. Quantitative
-  g. Qualitative
+### a.
+
+Quantitative
+
+### b. 
+
+Quantitative
+
+### c. 
+
+Qualitative
+
+### d. 
+
+Quantitative
+
+### e. 
+
+Qualitative
+
+### f.
+
+Quantitative
+
+### g.
+
+Qualitative
   
 ## 4-Types of Random Sampling
 
@@ -72,4 +92,165 @@ The 4 types of random sampling are simple random sampling, stratified random sam
 
 Simple random sampling is choosing at random a predetermined number of experimental units from a population. Stratified random sampling is used when a population can be divided into two or more groups. Random samples are then taken from each group before being combined to form the overall sample of the population. Cluster sampling involves taking a complete sample of certain groups within a population and then combining these to form a sample of the total population. This is usually used when it would be difficult or costly to take small samples from each group within a population. Systematic sampling involves sampling every kth unit of a population to obtain a representative sample. 
 
+## 5-MTBE Well Problem
 
+```{r}
+mtbe=read.csv("MTBE.csv", header=TRUE) 
+head(mtbe) 
+dim(mtbe) 
+ind=sample(1:223,5,replace=FALSE) # random indices
+mtbe[ind,]
+```
+
+The wells in my sample are 118, 23, 13, 148, and 131.
+
+
+### a. 
+
+#### i.
+```{r}
+mtbeo=na.omit(mtbe)
+head(mtbeo)
+```
+   
+#### ii.
+```{r}
+depth=mtbeo[mtbeo$Aquifier=="Bedrock",]$Depth
+mean(depth)
+sd(depth)
+```
+  
+The standard deviation of well depth of wells with Bedrock as the aquifier is 56.4536.
+
+## 6-Earthquake Problem
+
+```{r}
+eq=read.csv("EARTHQUAKE.csv", header=TRUE) 
+head(eq) 
+dim(eq)
+v = sample(1:2929,10,replace=FALSE)
+eq[v,]
+```
+
+### a.
+
+#### i.
+
+```{r}
+plot(ts(eq$MAG))
+```
+
+#### ii.
+```{r}
+mag = eq$MAGNITUDE
+median(mag)
+```
+The median value for magnitude of the earthquake is 2.
+
+
+## 7-MS Statistics In Action
+
+### a. 
+
+The data collection method is a designed experiment with a stratified sample. The different locations where specimens of fish were collected represent the strata for this study.
+
+### b.
+
+The population for this study is not the sum of all the fish specimens that were obtained but rather the total number of fish in the Tennessee River and its various tributaries.
+
+### c.
+
+The names of all the qualitative variables are "MILE", "RIVER", and "SPECIES".
+
+## 8-Do Social Robots Walk or Roll?
+
+```{r}
+freq=c(15,8,63,20)
+RL=c("None","Both","LegsO","WheelsO")
+l=rep(RL,freq)
+lt = table(l)
+barplot(lt)
+```
+
+
+### a. 
+
+A barplot is used to describe the data.
+
+### b. 
+
+The variable measured was presence of wheels and/or legs in each of the 103 robot designs.
+
+### c. 
+
+Legs only is the robot design that is currently most used.
+
+### d. 
+
+The class frequencies for each category are as follows: None: 0.1415, Both: 0.0755, Legs ONLY: 0.5943, Wheels ONLY: 0.1887.
+
+### e. 
+
+Pareto Diagram
+  
+```{r}
+pareto<-function(x,mn="Pareto barplot",...){  # x is a vector
+x.tab=table(x)
+xx.tab=sort(x.tab, decreasing=TRUE,index.return=FALSE)
+cumsum(as.vector(xx.tab))->cs
+length(x.tab)->lenx
+bp<-barplot(xx.tab,ylim=c(0,max(cs)),las=2)
+lb<-seq(0,cs[lenx],l=11)
+axis(side=4,at=lb,labels=paste(seq(0,100,length=11),"%",sep=""),las=1,line=-1,col="Blue",col.axis="Red")
+for(i in 1:(lenx-1)){
+segments(bp[i],cs[i],bp[i+1],cs[i+1],col=i,lwd=2)
+}
+title(main=mn,...)
+
+}
+
+pareto(l)
+```
+
+## 9-Microsoft Program Security Issues
+
+### a.
+
+```{r}
+freq1=c(32,6,12)
+products=c("Windows","Explorer","Office")
+mp=rep(products,freq1)
+mpt = table(mp)
+pie(mpt, col = 2:4)
+```
+
+Explorer was the Microsoft product with the lowest proportion of security issues in 2012.
+
+### b.
+
+```{r}
+freq2=c(6,8,22,3,11)
+repercuss=c("DoS","ID","RCE", "S", "PE")
+mr=rep(repercuss,freq2)
+pareto(mr)
+```
+
+Based on the graph, I would advise Microsoft to focus on remote code execution.
+
+## 10-Software Defects
+
+```{r}
+swd=read.csv("SWDEFECTS.csv", header=TRUE) 
+head(swd) 
+library(plotrix)
+tab=table(swd$defect)
+rtab=tab/sum(tab)
+round(rtab,2)
+pie3D(rtab,labels=list("OK","Defective"),main="pie plot of SWD")
+```
+
+It is relatively unlikely that a given piece of software code will be defective, given that a clear majority of software code is OK. That being said, a sizable portion of code is still defective.
+  
+  
+  
+  
