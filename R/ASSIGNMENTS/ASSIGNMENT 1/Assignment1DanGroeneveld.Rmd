@@ -1,0 +1,75 @@
+---
+title: "Assignment 1: MATH 4753"
+author: "Dan Groeneveld"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1-Grading
+
+My final grade for the course will be calculated as the following:
+```{r}
+read.csv("Gradingscheme.csv")
+```
+
+The right most column sums to 100% as expected.
+As in the class are 90s, Bs are 80s, Cs are 60s and 70s, Ds are 50s, and below 50 is failing. There is NO curving for this course!
+
+## 2-Coplot
+
+```{r}
+ddt <- read.csv("DDT.csv")
+head(ddt)
+m=with(ddt, as.numeric(factor(MILE)))
+length(unique(m))
+```
+
+### a. 
+
+```{r}
+coplot(LENGTH~WEIGHT|RIVER*SPECIES,data=ddt,col=m, pch=21)
+```
+
+### b.
+
+
+### c.
+
+
+### d.
+
+
+### e.
+
+
+### f.
+
+
+## 3-National Bridge Inventory
+
+  a. Quantitative
+  b. Quantitative
+  c. Qualitative
+  d. Quantitative
+  e. Qualitative
+  f. Quantitative
+  g. Qualitative
+  
+## 4-Types of Random Sampling
+
+### a.
+
+The 4 types of random sampling are simple random sampling, stratified random sampling, cluster sampling, and systematic sampling.
+
+### b.
+
+Simple random sampling is choosing at random a predetermined number of experimental units from a population. Stratified random sampling is used when a population can be divided into two or more groups. Random samples are then taken from each group before being combined to form the overall sample of the population. Cluster sampling involves taking a complete sample of certain groups within a population and then combining these to form a sample of the total population. This is usually used when it would be difficult or costly to take small samples from each group within a population. Systematic sampling involves sampling every kth unit of a population to obtain a representative sample. 
+
+
