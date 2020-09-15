@@ -75,7 +75,7 @@ with(spruce.df,
 plot(Height~BHDiameter,bg="Blue",pch=21,ylim=c(0,1.1*max(Height)),xlim=c(0,1.1*max(BHDiameter)))
 )
 
-yhat=with(spruce.df,predict(ht.lm,data.frame(BHDiameter)))
+yhat=with(spruce.df,predict(sp.lm,data.frame(BHDiameter)))
 
 yhat=fitted(sp.lm)
 
@@ -107,22 +107,22 @@ with(spruce.df, segments(BHDiameter,Height,BHDiameter,mean(Height),col="Green"))
 
 
 ```{r}
-TSS=with(fin.df,sum((HEAT-mean(HEAT))^2))
+TSS=with(spruce.df,sum((Height-mean(Height))^2))
 TSS
 MSS
 RSS
 ```
 
-TSS = 27.805
-MSS = 23.2739
-RSS = 4.5311
+TSS = 278.9475
+MSS = 183.2477
+RSS = 95.7028
 
 ```{r}
 MSS/TSS
 ```
 
-MSS/TSS = 0.8370
-This means that the model accounts for 83.7% of the variance in the data.
+MSS/TSS = 0.6569
+This means that the model accounts for 65.7% of the variance in the data.
 
 ```{r}
 MSS + RSS
@@ -142,6 +142,26 @@ The slope = 0.4815
 The intercept = 9.1468
 HEAT = 9.1468 + 0.4815*RATIO
 
+```{r}
+predict(spruce.lm, data.frame(BHDiameter=c(15,18,20)))
+```
+
+The predicted heights for spruce trees are 16.3690 m, 17.8134 m, and 18.7763 m respectively.
 
 
+## Task 6
 
+```{r}
+library(ggplot2)
+g=ggplot(spruce.df, aes(x=BHDiameter,y=Height,colour=BHDiameter))
+g=g+geom_point() + geom_line()+ geom_smooth(method="lm")
+g+ggtitle("Height vs. Diameter")
+```
+
+## Task 7
+
+![](P.png){ width=70% }
+
+![](LS.png){ width=70% }
+
+![](SLR.png){ width=70% }
