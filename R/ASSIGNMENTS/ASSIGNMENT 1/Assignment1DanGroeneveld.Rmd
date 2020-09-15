@@ -39,18 +39,28 @@ coplot(LENGTH~WEIGHT|RIVER*SPECIES,data=ddt,col=m, pch=21)
 
 ### b.
 
+The lower left 3 conditional plots show that only one species of fish (C Catfish) were caught in each of the rivers (FCM, LCM, SCM). 
 
 ### c.
 
+Line A turns the variable mile into a numeric value.
 
 ### d.
 
+Line B shows the number of unique miles in the dataset.
 
 ### e.
 
+The top 6 plots are empty becuase no fish of the species LMBASS or SMBUFFALO were caught in the rivers FCM, LCM, or SCM.
 
 ### f.
 
+```{r}
+fcmddt <- ddt[ddt$RIVER=="FCM" & ddt$SPECIES=="CCATFISH",]$DDT
+mean(fcmddt)
+```
+
+The mean value of ddt found CCATFISH from the FCM river is 45.
 
 ## 3-National Bridge Inventory
 
@@ -252,5 +262,93 @@ pie3D(rtab,labels=list("OK","Defective"),main="pie plot of SWD")
 It is relatively unlikely that a given piece of software code will be defective, given that a clear majority of software code is OK. That being said, a sizable portion of code is still defective.
   
   
-  
-  
+## 11-Process Voltage Readings
+
+### a.
+
+```{r}
+voltage=read.csv("VOLTAGE.csv", header=TRUE)
+head(voltage)
+```
+
+
+## 12-Surface Roughness of Pipe
+
+
+```{r}
+rp=read.csv("ROUGHPIPE.csv", header=TRUE)
+rough=rp$ROUGH
+hist(rough, col = 2:12)
+mean(rough)
+sd(rough) * 2
+```
+
+The interval from 0.8332 to 2.9288 micrometers will likely contain 95% of all coated pipe roughness measurements by the empirical rule.
+
+
+## 13-Mongolian Desert Ants
+
+### a.
+
+```{r}
+ga=read.csv("GOBIANTS.csv", header=TRUE)
+head(ga)
+as = ga$AntSpecies
+mean(as)
+median(as)
+mode(as)
+```
+
+The mean is 12.8182
+The median is 5
+The modes are 4 and 5
+
+### b.
+
+I would recommend using the median as the measure of central tendency to describe the center of the number of ant species distribution because the mean is skewed by two outliers, having 49 and 52 ant species respectively. The mode is also useful, but because there are two modes, and one of the modes is the median, I think the median does a better job at representing the central tendency.
+
+### c.
+
+```{r}
+dstpc=ga[ga$Region=="Dry Steppe",]$PlantCov
+mean(dstpc)
+median(dstpc)
+mode(dstpc)
+```
+
+The mean is 40.4%
+The median is 40%
+The mode is 40%
+
+### d.
+
+```{r}
+gdtpc=ga[ga$Region=="Gobi Desert",]$PlantCov
+mean(gdtpc)
+median(gdtpc)
+mode(gdtpc)
+```
+
+The mean is 28%
+The median is 26%
+The mode is 30%
+
+### e.
+
+Yes, the center of total plant cover percentage distribution appears to be different at the two regions. In the dry steppe region, the center of total plant cover percentage distribution is around 40% while it's around 26-30% in the gobi desert region.
+
+
+## 14-Speed of Light from Galaxies
+
+### a.
+
+```{r}
+g2 = read.csv("GALAXY2.csv", header = TRUE)
+head(g2)
+```
+
+
+
+
+
+
