@@ -1642,18 +1642,18 @@ head(mtbe) </code></pre>
 <pre><code>## [1] 223  16</code></pre>
 <pre class="r"><code>ind=sample(1:223,5,replace=FALSE) # random indices
 mtbe[ind,]</code></pre>
-<pre><code>##       pH SpConduct DissOxy RoadsPct IndPct UrbanPct DevPct WellClass  Aquifier
-## 214 7.30     513.0    1.88     3.05   0.00    41.03  41.03    Public Unconsoli
-## 96  7.15     545.7    0.11     1.00   0.00    16.09  19.34   Private   Bedrock
-## 70  6.65     362.6    3.88     1.52   0.00    20.92  21.22   Private   Bedrock
-## 114 7.58     399.7    1.74     2.73  18.35    40.83  40.83    Public   Bedrock
-## 152 8.10     200.2    0.72     1.60   0.21    22.95  22.95    Public   Bedrock
-##      Depth   SafeYld Distance MTBE.Detect MTBE.Level HouseDen PopDen
-## 214     NA        NA   953.94      Detect       0.24    17.71   7.38
-## 96      NA        NA  3181.14      Detect       0.48    30.89  10.59
-## 70      NA        NA  1214.51 Below Limit       0.20   439.55 109.89
-## 114 99.060 473.12642   130.48      Detect       3.10   150.51  56.71
-## 152 97.536  94.62528   574.59      Detect       0.26   103.03  58.23</code></pre>
+<pre><code>##       pH SpConduct DissOxy RoadsPct IndPct UrbanPct DevPct WellClass Aquifier
+## 177 7.59     390.4    2.25     4.23  17.46    41.13  53.45    Public  Bedrock
+## 67  7.37     338.6    5.25     1.70   0.00    21.59  57.54   Private  Bedrock
+## 69  7.12     180.8    4.59     1.76   0.00    28.22  28.22   Private  Bedrock
+## 100 8.22     135.4    0.44     1.86   0.00    43.71  43.71   Private  Bedrock
+## 33  9.46     238.3    7.76     0.72   0.00     6.75   6.75   Private  Bedrock
+##        Depth  SafeYld Distance MTBE.Detect MTBE.Level HouseDen PopDen
+## 177 112.7760 37.85011   782.47      Detect        2.7   134.04  57.45
+## 67   30.4800       NA  2527.29 Below Limit        0.2    70.13  36.36
+## 69  174.9552       NA  1849.10 Below Limit        0.2    39.92  12.22
+## 100  88.3920       NA  1832.50 Below Limit        0.2   206.68  77.74
+## 33  129.2352       NA  3060.33 Below Limit        0.2    23.52   7.13</code></pre>
 <p>The wells in my sample are 118, 23, 13, 148, and 131.</p>
 <div id="a.-3" class="section level3">
 <h3>a.</h3>
@@ -1703,16 +1703,16 @@ head(eq) </code></pre>
 <pre class="r"><code>v = sample(1:2929,10,replace=FALSE)
 eq[v,]</code></pre>
 <pre><code>##      YEAR MONTH DAY HOUR MINUTE MAGNITUDE
-## 2231 1994     1  29    6     55       1.3
-## 775  1994     1  20   21      3       1.9
-## 1757 1994     1  25   23     27       1.8
-## 2459 1994     2   1   19     33       2.0
-## 2469 1994     2   1   22     28       1.8
-## 533  1994     1  19   21      8       2.4
-## 1803 1994     1  26    6     31       1.5
-## 733  1994     1  20   17      6       2.2
-## 2817 1994     2   5    4     32       1.5
-## 1237 1994     1  22   22     51       1.7</code></pre>
+## 1315 1994     1  23    9     28       1.9
+## 981  1994     1  21   18     29       1.8
+## 358  1994     1  19    0      2       2.4
+## 959  1994     1  21   16     17       1.8
+## 1249 1994     1  23    0     38       1.8
+## 816  1994     1  21    1     38       2.1
+## 2289 1994     1  29   19     22       2.1
+## 321  1994     1  18   18      9       2.5
+## 1148 1994     1  22   13     53       2.0
+## 1422 1994     1  24    1      4       1.4</code></pre>
 <div id="a.-4" class="section level3">
 <h3>a.</h3>
 <div id="i.-1" class="section level4">
@@ -2049,8 +2049,8 @@ mean(A1775A)</code></pre>
 <p>A galaxy of velocity 20,000 km/s is likely to belong to cluster A1775A because this velocity falls within roughly one standard deviation of the mean galaxy velocity for cluster A1775A.</p>
 </div>
 </div>
-<div id="section" class="section level2">
-<h2>15-</h2>
+<div id="ggplot" class="section level2">
+<h2>15-ggplot</h2>
 <pre class="r"><code>library(ggplot2)
 ddt = read.csv(&quot;DDT.csv&quot;, header = TRUE)
 

@@ -58,9 +58,90 @@ abline(spruce.lm)
 ## Task 4
 
 ```{r}
-fintubes.df = read.csv("FINTUBES.csv")
+spruce.df = read.csv("SPRUCE.csv")
+library(s20x)
+layout(matrix(1:4,nr=2,nc=2,byrow=TRUE))
+
 layout.show(4)
+with(spruce.df, 
+plot(Height~BHDiameter,bg="Blue",pch=21,ylim=c(0,1.1*max(Height)),xlim=c(0,1.1*max(BHDiameter)))
+)
+
+sp.lm=with(spruce.df, lm(Height~BHDiameter))
+
+abline(sp.lm)
+
+with(spruce.df, 
+plot(Height~BHDiameter,bg="Blue",pch=21,ylim=c(0,1.1*max(Height)),xlim=c(0,1.1*max(BHDiameter)))
+)
+
+yhat=with(spruce.df,predict(ht.lm,data.frame(BHDiameter)))
+
+yhat=fitted(sp.lm)
+
+with(spruce.df,{
+segments(BHDiameter,Height,BHDiameter,yhat)
+})
+abline(sp.lm)
+
+RSS=with(spruce.df,sum((Height-yhat)^2))
+
+with(spruce.df, 
+plot(Height~BHDiameter,bg="Blue",pch=21,ylim=c(0,1.1*max(Height)),xlim=c(0,1.1*max(BHDiameter)))
+)
+
+with(spruce.df, abline(h=mean(Height)))
+abline(sp.lm)
+
+with(spruce.df, segments(BHDiameter,mean(Height),BHDiameter,yhat,col="Red"))
+MSS=with(spruce.df,sum((yhat-mean(Height))^2))
+
+
+with(spruce.df, 
+plot(Height~BHDiameter,bg="Blue",pch=21,ylim=c(0,1.1*max(Height)),xlim=c(0,1.1*max(BHDiameter)))
+)
+with(spruce.df,abline(h=mean(Height)))
+with(spruce.df, segments(BHDiameter,Height,BHDiameter,mean(Height),col="Green"))
 
 ```
+
+
+```{r}
+TSS=with(fin.df,sum((HEAT-mean(HEAT))^2))
+TSS
+MSS
+RSS
+```
+
+TSS = 27.805
+MSS = 23.2739
+RSS = 4.5311
+
+```{r}
+MSS/TSS
+```
+
+MSS/TSS = 0.8370
+This means that the model accounts for 83.7% of the variance in the data.
+
+```{r}
+MSS + RSS
+TSS
+```
+
+Yes, TSS = MSS + RSS
+
+## Task 5
+
+```{r}
+summary(spruce.lm)
+```
+
+
+The slope = 0.4815
+The intercept = 9.1468
+HEAT = 9.1468 + 0.4815*RATIO
+
+
 
 
