@@ -343,12 +343,37 @@ Yes, the center of total plant cover percentage distribution appears to be diffe
 ### a.
 
 ```{r}
+library(lattice)
 g2 = read.csv("GALAXY2.csv", header = TRUE)
 head(g2)
+vel=g2$VELOCITY
+dotplot(vel, main = "Dotplot of Velocities")
 ```
 
+### b.
+
+Yes, there is evidence to support the double cluster theory. In the dotplot above, there are two distinct groupings of velocities, one centered around roughly 19500 km/s and the other centered roughly around 22500 km/s.
+
+### c.
+
+```{r}
+A1775A = g2[g2$VELOCITY < 21000,]
+A1775B = g2[g2$VELOCITY > 21000,]
+mean(A1775A)
+sd(A1775A)
+mean(A1775B)
+sd(A1775B)
+```
+
+The mean velocity for galaxy cluster A1775A is 19462.24 km/s and the standard deviation is 532.2868 km/s.
+The mean velocity for galaxy cluster A1775B is 22838.47 km/s and the standard deviation is 560.9767 km/s.
+
+### d.
+
+A galaxy of velocity 20,000 km/s is likely to belong to cluster A1775A because this velocity falls within roughly one standard deviation of the mean galaxy velocity for cluster A1775A.
 
 
+## 15-
 
 
 
