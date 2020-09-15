@@ -12,6 +12,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+14/15 questions completed.
+
 ## 1-Grading
 
 My final grade for the course will be calculated as the following:
@@ -267,9 +269,65 @@ It is relatively unlikely that a given piece of software code will be defective,
 ### a.
 
 ```{r}
-voltage=read.csv("VOLTAGE.csv", header=TRUE)
-head(voltage)
+volt=read.csv("Oldlocationtable.csv", header=TRUE)
+volt
+barplot(volt$Relative.Frequency, space = 0, xlab = "Class Interval", ylab = "Relative Frequency", main = "Old Voltage Histogram", col = 2:11)
 ```
+
+### b.
+
+```{r}
+voltage = read.csv("VOLTAGE.csv", header = TRUE)
+head(voltage)
+oldv = voltage[voltage$LOCATION == "OLD",]$VOLTAGE
+stem(oldv)
+```
+
+The stem-and-leaf display is more informative about where most of the voltage readings lie as it clearly shows the cluster from 9.6-10.3
+
+### c.
+
+```{r}
+voltage.df = data.frame(voltage)
+new<-subset(voltage.df,subset=LOCATION=="NEW")
+new$VOLTAGE->vtn
+vtn
+max(vtn)
+min(vtn)
+lept<-min(vtn)-0.05
+rept<-max(vtn)+0.05
+rnge<-rept-lept
+inc<-rnge/9
+inc
+seq(lept, rept,by=inc)->cl
+cl
+cvtn<-cut(vtn,breaks=cl)
+new.tab=table(cvtn)
+barplot(new.tab,space=0,main="Frequency Histogram(NEW)",las=2)
+hist(vtn,nclass=10)
+```
+
+### d.
+
+It appears that the manufacturing process cannot be established locally, the new process is not as good as the old process, as there are more readings below 9.2 volts.
+
+### e.
+
+```{r}
+mean(oldv)
+median(oldv)
+mode(oldv)
+mean(vtn)
+median(vtn)
+mode(vtn)
+```
+The mean of the old voltage dataset is 9.8037.
+The median of the old voltage dataset is 9.975. 
+The mode is not meaningful in this situation.
+The mean of the new voltage dataset is 9.4223.
+The median of the new voltage dataset is 9.455.
+The mode is not meaninful in this situation.
+
 
 
 ## 12-Surface Roughness of Pipe
@@ -373,7 +431,24 @@ The mean velocity for galaxy cluster A1775B is 22838.47 km/s and the standard de
 A galaxy of velocity 20,000 km/s is likely to belong to cluster A1775A because this velocity falls within roughly one standard deviation of the mean galaxy velocity for cluster A1775A.
 
 
-## 15-
+## 15-ggplot
+
+
+```{r}
+library(ggplot2)
+ddt = read.csv("DDT.csv", header = TRUE)
+
+ b = ggplot(ddt, aes(x = RIVER, y = LENGTH))
+ b = b + geom_boxplot(aes(fill= SPECIES)) + 
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+  labs(title="Dan Groeneveld", 
+       caption="Source: DDT.csv",
+       x="RIVER",
+       y="LENGTH")
+b
+
+```
+
 
 
 
