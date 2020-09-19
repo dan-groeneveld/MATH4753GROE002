@@ -1,0 +1,199 @@
+---
+title: 'Lab 4: MATH 4753'
+author: "Dan Groeneveld"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+```{r}
+spruce.df = read.csv("SPRUCE.csv") #Spruce dataset is read into R and placed in the variable spruce.df
+tail(spruce.df)
+```
+
+## Task 3
+
+```{r}
+library(s20x)
+
+trendscatter(Height~BHDiameter,f=0.5,data=spruce.df)
+```
+
+```{r}
+spruce.lm=lm(Height~BHDiameter,data=spruce.df)
+summary(spruce.lm)
+#residuals  created from the linear model object
+height.res=residuals(spruce.lm)
+
+#fitted values made from the linear model object
+height.fit=fitted(spruce.lm)
+```
+
+```{r}
+plot(height.fit,height.res)
+
+# Put a lowess smoother through res vs fitted
+trendscatter( height.fit,height.res)
+```
+
+This graph has a rough mound shape as opposed to the previous height which had the appearance of a piecewise graph with two line segments.
+
+```{r}
+normcheck(spruce.lm,shapiro.wilk = TRUE)
+```
+
+The P-value is 0.29. The null hypothesis is that the probability distribution of the response y is normal. This hypothesis is confirmed as p is greater than 0.05.
+
+I do not think applying a straight-line to this data set is appropriate as there is structure in the residuals vs the fitted values, where there should only be a random spread.
+
+## Task 4
+
+```{r}
+quad.lm=lm(Height~BHDiameter + I(BHDiameter^2),data=spruce.df)
+summary(quad.lm)
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,
+ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)), 
+main="Spruce height prediction",data=spruce.df)
+myplot=function(x){
+ quad.lm$coef[1] +quad.lm$coef[2]*x  + quad.lm$coef[3]*x^2
+ } 
+ 
+curve(myplot, lwd=2, col="steelblue",add=TRUE)
+quad.fit=fitted(quad.lm)
+quad.res=residuals(quad.lm)
+plot(quad.lm, which=1)
+normcheck(quad.lm,shapiro.wilk = TRUE)
+```
+
+The P-value is 0.684. I conclude from this that the quadratic model fits the data much better than the straight-line.
+
+## Task 5
+
+```{r}
+summary(quad.lm)
+```
+
+The value of Bhat0 is 0.8609
+The value of Bhat1 is 1.4696
+The value of Bhat2 is -0.0275
+Interval estimates:
+
+```{r}
+library(s20x)
+ciReg(quad.lm)
+```
+
+
+height = 0.8609 + 1.4696BD -0.0275BD^2
+
+
+```{r}
+predict(quad.lm, data.frame(BHDiameter=c(15,18,20)))
+```
+
+The predicted heights are 16.7269 m, 18.4174 m, and 19.2698 m respectively. The heights predicted with the linear model were 16.3690 m, 17.8134 m, and 18.7763 m respectively. The values predicted with the quadratic model are larger than those from the linear model which predicted shorter tree heights.
+
+The value of multiple R-squared is 0.7741 compared to 0.6569 in the linear model. 
+Adjusted R-squared is 0.7604 for the quadratic model and 0.6468 for the linear model. The quadratic model fits the data better as it accounts for more of the variance than the linear model does.
+The multiple R-squared means that the quadratic model accounts for 77.41% of the variance in the data in this case.
+The quadratic model explains the most variance in height.
+
+```{r}
+anova(spruce.lm)
+anova(quad.lm)
+anova(spruce.lm,quad.lm)
+```
+
+The quadratic model performed better as it has a lower residuals value (33 vs. 34) and a lower RSS value (63.007 vs. 95.703).
+
+```{r}
+height.qfit=fitted(quad.lm)
+
+TSS = with(spruce.df, sum((Height-mean(Height))^2))
+TSS
+
+MSS = with(spruce.df, sum((height.qfit-mean(Height))^2))
+MSS
+
+RSS=with(spruce.df, sum((Height-height.qfit)^2))
+RSS
+
+MSS/TSS
+```
+
+TSS = 278.9475
+MSS = 215.9407
+RSS = 63.0068
+MSS/TSS = 0.7741
+
+## Task 6
+
+```{r}
+cooks20x(quad.lm)
+```
+
+Cooks distance is a measure of the effect that deleting a point would have on the model. A large Cooks distance indicates that that point exerts a large influence when calculating least squares regression analysis and may merit closer examination.
+
+Cooks data tells me that data point 24 has a significant effect on the least squares regression analysis and is detrimental to the accuracy of the quadratic model for fitting the rest of the data.
+
+```{r}
+quad2.lm=lm(Height~BHDiameter + I(BHDiameter^2) , data=spruce.df[-24,])
+summary(quad2.lm)
+summary(quad.lm)
+```
+
+With the 24th datum removed, the multiple R-squared value is 0.8159 compared to 0.7741 in the old quadratic model.
+
+I conclude that removing the 24th datum has a positive effect on the model and does a better job at modeling the majority of the data.
+
+
+## Task 7
+
+$$R^2=\frac{MSS}{TSS}$$
+
+```{r}
+sp2.df=within(spruce.df, X<-(BHDiameter-18)*(BHDiameter>18)) # this makes a new variable and places it within the same df
+sp2.df
+
+lmp=lm(Height~BHDiameter + X,data=sp2.df)
+tmp=summary(lmp)
+names(tmp)
+myf = function(x,coef){
+  coef[1]+coef[2]*(x) + coef[3]*(x-18)*(x-18>0)
+}
+plot(spruce.df,main="Piecewise regression")
+myf(0, coef=tmp$coefficients[,"Estimate"])
+curve(myf(x,coef=tmp$coefficients[,"Estimate"] ),add=TRUE, lwd=2,col="Blue")
+abline(v=18)
+text(18,16,paste("R sq.=",round(tmp$r.squared,4) ))
+```
+
+
+## Task 8
+                                                                                                                           
+```{r}
+library(MATH4753GROE002)
+
+plot(Height~BHDiameter,bg="Blue",pch=21,cex=1.2,
+ylim=c(0,max(Height)),xlim=c(0,max(BHDiameter)), 
+main="Spruce height prediction",data=spruce.df)
+x = spruce.df$BHDiameter
+myplot(x)
+curve(myplot, lwd=2, col="steelblue",add=TRUE)
+```
+
+This function gives the equation of a quadratic model for the provided data.
