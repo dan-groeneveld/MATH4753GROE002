@@ -1,0 +1,183 @@
+---
+title: 'Project 1: MATH 4753'
+author: "Dan Groeneveld"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1 Introduction to the Data
+
+### 1.1 Data and Variables
+
+The SWDEFECTS dataset contains code from a NASA space craft mission. There are 498 modules of code that are listed as either having of not having defects. In this dataset are also four prediction methods that are used to predict whether a module contains or does not contain defects. Our goal is to compare the performance of these prediction methods using statistical methods.
+
+### 1.2 Summary Table
+
+The summary table from page 125 was created in EXCEL and then read in as a .csv file.
+
+```{r}
+sumtab = read.csv("SUMMARYTABLE.csv")
+sumtab
+
+```
+
+Explanations of how to find each value:
+
+#### Accuracy:
+
+$$P(Algorithm~is~correct) = \frac{a+d}{a+b+c+d} $$
+
+#### Detection Rate:
+
+$$ P(predict~defect~|~module~has~defect) = \frac{d}{b+d} $$
+
+
+#### False Alarm Rate:
+
+$$ P(predict~defect~|~module~has~no~defect) = \frac{c}{a+c} $$
+
+#### Precision:
+
+$$ P(module~has~defect~|~predict~defect) = \frac{d}{c+d} $$
+
+## 2 Making the R Functions
+
+Below the functions for accuracy, detection rate, false alarm rate, and precision are generated.
+
+```{r accuracy}
+acc=function(a,b,c,d)
+{(a + d)/(a+b+c+d)
+  
+  
+}
+
+```
+
+```{r detect}
+detect=function(b,d)
+{(d)/(b+d)
+  
+}
+```
+
+```{r alarm}
+falarm=function(a,c)
+{(c)/(a+c)
+  
+}
+```
+
+```{r precision}
+prec=function(c,d)
+{(d)/(c+d)
+  
+}
+```
+
+
+## 3 Creating Barplots for the Four Predictions Methods
+
+Reading in the data.
+
+```{r}
+swd=read.csv("SWDEFECTS.csv")
+head(swd)
+```
+
+The barplot and table for each of the four methods are given below.
+
+### Lines of Code
+
+```{r}
+tab=with(swd, table(predict.loc.50,defect))
+barplot(tab, beside=TRUE, leg=TRUE)
+```
+
+```{r}
+tabLOC = addmargins(tab)
+tabLOC
+```
+
+### Cyclomatic Complexity
+
+```{r}
+tabVG=with(swd, table(predict.vg.10, defect))
+barplot(tabVG, beside=TRUE, leg=TRUE)
+```
+
+```{r}
+tabVG2 = addmargins(tabVG)
+tabVG2
+```
+
+### Essential Complexity
+
+```{r}
+tabEVG=with(swd, table(predict.evg.14.5, defect))
+barplot(tabEVG,beside=TRUE, leg=TRUE)
+```
+
+```{r}
+tabEVG2=addmargins(tabEVG)
+tabEVG2
+```
+
+### Design complexity
+
+```{r}
+tabIVG=with(swd, table(predict.ivg.9.2, defect))
+barplot(tabIVG,beside=TRUE, leg=TRUE)
+```
+
+```{r}
+tabIVG2=addmargins(tabIVG)
+tabIVG2
+```
+
+
+## 4 Creating the Corrected Table and Associated Barplot
+
+The corrected table on page 127.
+
+```{r}
+#Inputting the values calculated outside of r
+tab3 = matrix(c(.843, .408, .109, .290, .825, .286, .116, .212, .890, .041, .018, .200, .869, .224, .060, .289), nr=4, nc=4, byrow=TRUE)
+rownames(tab3) = c("Lines of code", "Cyclomatic complexity", "Essential complexity", "Design complexity") # Row names
+colnames(tab3) = c("Accuracy", "Detection rate", "False alarm", "Precision") # Column names
+tab3
+```
+
+```{r}
+#Creating the function my bar
+mybar = function(tab, acc){
+  #Rounding input to desired accuracy  
+  round(tab,acc)
+  #Generating barplot
+  barplot(tab, col = 2:5, beside = TRUE, legend = TRUE, main = "Comparing the 4 Prediction Methods")
+  #Printing out values
+  list(table=tab)
+}
+```
+
+The barplot.
+
+```{r}
+mybar(tab3, 4)
+```
+
+
+
+
+
+
+
+
+
+
