@@ -1,0 +1,547 @@
+---
+title: 'Lab 6: MATH4753'
+author: "Dan Groeneveld"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Task 1
+
+Working directory.
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+Plotting normal distributions.
+
+```{r}
+#Setting up the layout to show 4 plots
+
+layout(matrix(1:4, nr=2,nc=2))
+
+#layout.show(4)
+
+#Making the normal distribution functions
+
+curve(dnorm(x, mean=10,sd=4),xlim=c(-10,30))
+
+curve(dnorm(x, mean=10,sd=2),xlim=c(0,20))
+
+curve(dnorm(x, mean=5,sd=10),xlim=c(-20,30))
+
+curve(dnorm(x, mean=5,sd=0.5),xlim=c(2,8))
+```
+
+Plotting probabilities for normal distributions
+
+```{r}
+
+# First curve
+curve(dnorm(x, mean=0,sd=1),xlim=c(-5,5))
+
+# Find the area greater than 2
+
+# x values corresponding to the x - cords of points on the curve
+xcurve1=seq(2,10,length=1000)
+
+# Y values corresponding t0 the x values
+ycurve1=dnorm(xcurve1,mean=0,sd=1)
+
+# Fill in the polygon with the given vertices
+polygon(c(2,xcurve1,10),c(0,ycurve1,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+prob1=1 - pnorm(2,mean=0,sd=1)
+prob1=round(prob1,4)
+
+# Click to paste the text onto the graph
+
+text(2,0.1, paste("Area = ", prob1, sep=""))
+
+# Second curve
+curve(dnorm(x, mean=4,sd=2),xlim=c(-2,10))
+
+# Find the area between x=1 and 5
+
+# x values corresponding to the x - cords of points on the curve
+xcurve2=seq(1,5,length=1000)
+
+# Y values corresponding t0 the x values
+ycurve2=dnorm(xcurve2,mean=4,sd=2)
+
+# Fill in the polygon with the given vertices
+polygon(c(1,xcurve2,5),c(0,ycurve2,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+prob2=pnorm(5,mean=4,sd=2)-pnorm(1,mean=4,sd=2)
+prob2=round(prob2,4)
+
+# Click to paste the text onto the graph
+
+text(3,0.05, paste("Area = ", prob2, sep=""))
+
+# third curve
+curve(dnorm(x, mean=10,sd=4),xlim=c(-6,28))
+
+# Find the area between x=-6 and 10
+
+# x values corresponding to the x - cords of points on the curve
+xcurve3=seq(-6,10,length=1000)
+
+# Y values corresponding t0 the x values
+ycurve3=dnorm(xcurve3,mean=10,sd=4)
+
+# Fill in the polygon with the given vertices
+polygon(c(-6,xcurve3,10),c(0,ycurve3,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+prob3=pnorm(10,mean=10,sd=4)
+prob3=round(prob3,4)
+
+# Click to paste the text onto the graph
+
+text(8,0.05, paste("Area = ", prob3, sep=""))
+
+# third curve
+curve(dnorm(x, mean=-2,sd=0.5),xlim=c(-4,0))
+
+# Find the area between x=-6 and 10
+
+# x values corresponding to the x - cords of points on the curve
+xcurve4=seq(-3,-2,length=1000)
+
+# Y values corresponding t0 the x values
+ycurve4=dnorm(xcurve4,mean=-2,sd=0.5)
+
+# Fill in the polygon with the given vertices
+polygon(c(-3,xcurve4,-2),c(0,ycurve4,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+prob4=pnorm(-2,mean=-2,sd=0.5) - pnorm(-3,mean=-2,sd=0.5)
+prob4=round(prob4,4)
+
+# Click to paste the text onto the graph
+
+text(-2.5,0.4, paste("Area = ", prob4, sep=""))
+
+```
+
+## Task 3
+
+
+Plotting the gamma distributions.
+
+```{r}
+curve(dgamma(x,shape=1,scale=1),xlim=c(0,10),ylim=c(0,1),col="Red",lwd=2,
+ylab="Gamma density", main="Beta=1")
+text(0.9, 0.8,paste("alpha=",1))
+curve(dgamma(x,shape=3,scale=1),xlim=c(0,10),ylim=c(0,1),add=TRUE,lwd=2)
+text(2, 0.3,paste("alpha=",3))
+curve(dgamma(x,shape=5,scale=1),xlim=c(0,10),ylim=c(0,1),add=TRUE, col="Blue",lwd=2)
+text(5,0.22,paste("alpha=",5))
+```
+
+Plotting probabilities for the gamma distributions.
+
+```{r}
+# First curve
+curve(dgamma(x, shape=3,scale=2),xlim=c(0,15))
+
+# Find the area between 2 and 5
+
+# x values corresponding to the x - cords of points on the curve
+xcurveg1=seq(2,5,length=1000)
+
+# Y values corresponding t0 the x values
+ycurveg1=dgamma(xcurveg1,shape=3,scale=2)
+
+# Fill in the polygon with the given vertices
+polygon(c(2,xcurveg1,5),c(0,ycurveg1,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probg1=pgamma(5,shape=3,scale=2) - pgamma(2,shape=3,scale=2)
+probg1=round(probg1,4)
+
+# Click to paste the text onto the graph
+
+text(3.5,0.06, paste("Area = ", probg1, sep=""))
+```
+
+```{r}
+# Second curve
+curve(dgamma(x, shape=6,scale=3),xlim=c(0,40))
+
+# Find the area between 1 and 4
+
+# x values corresponding to the x - cords of points on the curve
+xcurveg2=seq(1,4,length=1000)
+
+# Y values corresponding t0 the x values
+ycurveg2=dgamma(xcurveg2,shape=6,scale=3)
+
+# Fill in the polygon with the given vertices
+polygon(c(1,xcurveg2,4),c(0,ycurveg2,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probg2=pgamma(4,shape=6,scale=3) - pgamma(1,shape=6,scale=3)
+probg2=round(probg2,4)
+
+# Click to paste the text onto the graph
+
+text(2.5,0.01, paste("Area = ", probg2, sep=""))
+```
+
+```{r}
+# Third curve
+curve(dgamma(x, shape=2,scale=4),xlim=c(0,25))
+
+# Find the area between 3 and 6
+
+# x values corresponding to the x - cords of points on the curve
+xcurveg3=seq(3,6,length=1000)
+
+# Y values corresponding t0 the x values
+ycurveg3=dgamma(xcurveg3,shape=2,scale=4)
+
+# Fill in the polygon with the given vertices
+polygon(c(3,xcurveg3,6),c(0,ycurveg3,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probg3=pgamma(6,shape=2,scale=4) - pgamma(3,shape=2,scale=4)
+probg3=round(probg3,4)
+
+# Click to paste the text onto the graph
+
+text(4.5,0.05, paste("Area = ", probg3, sep=""))
+```
+
+## Task 4
+
+Plotting the chi-square distributions.
+
+```{r}
+layout(matrix(1:4, nr=2,nc=2))
+
+curve(dchisq(x,df=1),xlim=c(0,10),ylim=c(0,1),col="Red",lwd=2,
+ylab="Chisq density", main="df=1")
+curve(dchisq(x,df=2),xlim=c(0,10),ylim=c(0,0.5),col="Red",lwd=2,
+ylab="Chisq density", main="df=2")
+curve(dchisq(x,df=4),xlim=c(0,10),ylim=c(0,0.3),col="Red",lwd=2,
+ylab="Chisq density", main="df=4")
+curve(dchisq(x,df=20),xlim=c(0,40),ylim=c(0,0.1),col="Red",lwd=2,
+ylab="Chisq density", main="df=20")
+```
+
+Plotting probabilities for the chi-square distributions.
+
+```{r}
+# First curve
+curve(dchisq(x, df=2),xlim=c(0,10))
+
+# Find the area between 2 and 4
+
+# x values corresponding to the x - cords of points on the curve
+xcurvec1=seq(2,4,length=1000)
+
+# Y values corresponding t0 the x values
+ycurvec1=dchisq(xcurvec1,df=2)
+
+# Fill in the polygon with the given vertices
+polygon(c(2,xcurvec1,4),c(0,ycurvec1,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probc1=pchisq(4,df=2) - pchisq(2, df=2)
+probc1=round(probc1,4)
+
+# Click to paste the text onto the graph
+
+text(3,0.05, paste("Area = ", probc1, sep=""))
+```
+
+```{r}
+# Second curve
+curve(dchisq(x, df=3),xlim=c(0,10))
+
+# Find the area between 3 and 5
+
+# x values corresponding to the x - cords of points on the curve
+xcurvec2=seq(3,5,length=1000)
+
+# Y values corresponding t0 the x values
+ycurvec2=dchisq(xcurvec2,df=3)
+
+# Fill in the polygon with the given vertices
+polygon(c(3,xcurvec2,5),c(0,ycurvec2,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probc2=pchisq(5,df=3) - pchisq(2, df=3)
+probc2=round(probc2,4)
+
+# Click to paste the text onto the graph
+
+text(4,0.05, paste("Area = ", probc2, sep=""))
+```
+
+```{r}
+# Third curve
+curve(dchisq(x, df=20),xlim=c(0,40))
+
+# Find the area between 10 and 21
+
+# x values corresponding to the x - cords of points on the curve
+xcurvec3=seq(10,21,length=1000)
+
+# Y values corresponding t0 the x values
+ycurvec3=dchisq(xcurvec3,df=20)
+
+# Fill in the polygon with the given vertices
+polygon(c(10,xcurvec3,21),c(0,ycurvec3,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probc3=pchisq(21,df=20) - pchisq(10, df=20)
+probc3=round(probc3,4)
+
+# Click to paste the text onto the graph
+
+text(15,0.02, paste("Area = ", probc1, sep=""))
+```
+
+## Task 5
+
+Plotting the weibull distributions.
+
+```{r}
+#Setting up layout
+
+layout(matrix(1:4, nr=2,nc=2))
+
+#layout.show(4)
+
+#Making the weibull distribution functions
+
+curve(dweibull(x, shape=1,scale=1),xlim=c(0,25))
+curve(dweibull(x, shape=2,scale=3),xlim=c(0,25))
+curve(dweibull(x, shape=5,scale=8),xlim=c(0,25))
+curve(dweibull(x, shape=13,scale=21),xlim=c(0,25))
+
+```
+
+Plotting probabilities for the weibull distributions.
+
+```{r}
+# First curve
+curve(dweibull(x, shape=1,scale=5),xlim=c(0,25))
+
+# Find the area between 2 and 8
+
+# x values corresponding to the x - cords of points on the curve
+xcurvew1=seq(2,8,length=1000)
+
+# Y values corresponding t0 the x values
+ycurvew1=dweibull(xcurvew1,shape=1,scale=5)
+
+# Fill in the polygon with the given vertices
+polygon(c(2,xcurvew1,8),c(0,ycurvew1,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probw1=pweibull(8,shape=1,scale=5) - pweibull(2,shape=1,scale=5)
+probw1=round(probw1,4)
+
+# Click to paste the text onto the graph
+
+text(5,0.05, paste("Area = ", probw1, sep=""))
+```
+
+```{r}
+# Second curve
+curve(dweibull(x, shape=11,scale=7),xlim=c(0,25))
+
+# Find the area between 4 and 6
+
+# x values corresponding to the x - cords of points on the curve
+xcurvew2=seq(4,6,length=1000)
+
+# Y values corresponding t0 the x values
+ycurvew2=dweibull(xcurvew2,shape=11,scale=7)
+
+# Fill in the polygon with the given vertices
+polygon(c(4,xcurvew2,6),c(0,ycurvew2,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probw2=pweibull(6,shape=11,scale=7) - pweibull(4,shape=11,scale=7)
+probw2=round(probw2,4)
+
+# Click to paste the text onto the graph
+
+text(5,0.05, paste("Area = ", probw2, sep=""))
+```
+
+```{r}
+# Third curve
+curve(dweibull(x, shape=3,scale=11),xlim=c(0,25))
+
+# Find the area between 13 and 20
+
+# x values corresponding to the x - cords of points on the curve
+xcurvew3=seq(13,20,length=1000)
+
+# Y values corresponding t0 the x values
+ycurvew3=dweibull(xcurvew3,shape=3,scale=11)
+
+# Fill in the polygon with the given vertices
+polygon(c(13,xcurvew3,20),c(0,ycurvew3,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probw3=pweibull(20,shape=3,scale=11) - pweibull(13,shape=3,scale=11)
+probw3=round(probw3,4)
+
+# Click to paste the text onto the graph
+
+text(16,0.03, paste("Area = ", probw3, sep=""))
+```
+
+## Task 6
+
+Plotting the beta distributions.
+
+```{r}
+#Setting up layout
+
+layout(matrix(1:4, nr=2,nc=2))
+
+curve(dbeta(x, shape1=1, shape2=5))
+curve(dbeta(x, shape1=5, shape2=1))
+curve(dbeta(x, shape1=2, shape2=5))
+curve(dbeta(x, shape1=6, shape2=8))
+```
+
+Plotting probabilities for the beta distributions.
+
+```{r}
+# First curve
+
+curve(dbeta(x, shape1=1,shape2=7))
+
+# Find the area between 0.4 and 1
+
+# x values corresponding to the x - cords of points on the curve
+xcurveb1=seq(0.4,1,length=1000)
+
+# Y values corresponding t0 the x values
+ycurveb1=dbeta(xcurveb1,shape1=1,shape2=7)
+
+# Fill in the polygon with the given vertices
+polygon(c(0.4,xcurveb1,1),c(0,ycurveb1,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probb1=pbeta(1,shape1=1,shape2=7) - pbeta(0.4,shape1=1,shape2=7)
+probb1=round(probb1,4)
+
+# Click to paste the text onto the graph
+
+text(0.5,2, paste("Area = ", probb1, sep=""))
+```
+
+```{r}
+# Second curve
+
+curve(dbeta(x, shape1=9,shape2=3))
+
+# Find the area between 0.3 and 0.7
+
+# x values corresponding to the x - cords of points on the curve
+xcurveb2=seq(0.3,0.7,length=1000)
+
+# Y values corresponding t0 the x values
+ycurveb2=dbeta(xcurveb2,shape1=9,shape2=3)
+
+# Fill in the polygon with the given vertices
+polygon(c(0.3,xcurveb2,0.7),c(0,ycurveb2,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probb2=pbeta(0.7,shape1=9,shape2=3) - pbeta(0.3,shape1=9,shape2=3)
+probb2=round(probb2,4)
+
+# Click to paste the text onto the graph
+
+text(0.58,0.25, paste("Area = ", probb2, sep=""))
+```
+
+```{r}
+# Third curve
+
+curve(dbeta(x, shape1=2,shape2=3))
+
+# Find the area between 0 and 0.5
+
+# x values corresponding to the x - cords of points on the curve
+xcurveb3=seq(0,0.5,length=1000)
+
+# Y values corresponding t0 the x values
+ycurveb3=dbeta(xcurveb3,shape1=2,shape2=3)
+
+# Fill in the polygon with the given vertices
+polygon(c(0,xcurveb3,0.5),c(0,ycurveb3,0),col="Red")
+
+# Put in the text with the appropriate area
+
+# Area
+probb3=pbeta(0.5,shape1=2,shape2=3) - pbeta(0,shape1=2,shape2=3)
+probb3=round(probb3,4)
+
+# Click to paste the text onto the graph
+
+text(0.25,0.7, paste("Area = ", probb3, sep=""))
+```
+
+## Task 7
+
+Calling the function myncurve.
+
+```{r}
+MATH4753GROE002::myncurve(mu=10,sigma=5, a=6)
+```
+
+
+

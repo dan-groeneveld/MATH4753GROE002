@@ -1,0 +1,25 @@
+---
+title: 'Project 2: MATH 4753'
+author: "Dan Groeneveld"
+date: "10/2/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+aic = read.csv('ANTICECORE.csv')
+head(aic)
+```
+
+```{r}
+library(s20x)
+
+aic.lm = lm(CH4~D, data = aic)
+
+plot(CH4~D, data = aic,  pch = 21, bg = "Blue", cex = 1.2)
+abline(aic.lm)
+```
+
