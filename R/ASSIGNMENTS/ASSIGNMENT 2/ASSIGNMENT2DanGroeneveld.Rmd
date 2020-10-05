@@ -1,0 +1,292 @@
+---
+title: 'Assignment 2: MATH 4753'
+author: "Dan Groeneveld"
+date: '`r format(Sys.Date(),format="%A, %B %d, %Y")`'
+output: 
+  html_document:
+    df_print: paged
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+__/17 questions answered.
+
+
+## 1-Fingerprint Expertise
+
+### a.
+
+Given a pair of matched fingerprints, the probability that an expert will fail to identify the match is 7.88%.
+
+### b.
+
+Given a pair of matched fingerprints, the probability that a novice will fail to identify the match is 25.45%.
+
+### c.
+
+Given that a pair of matched fingerprints are not identified by a randomly selected participant, the participant is more likely to be a novice.
+
+## 2-Drug Testing in Athletes
+
+### a.
+
+The probability that a drug test will yield a positive result given the athlete is a user is 42.3729%.
+
+### b.
+
+Gven the athlete is a nonuser, the probability that a testosterone test will yield a negative result is 99%.
+
+### c.
+
+Given that an athlete tests positive for testosterone, the probability they are actually doping is 84.7458%.
+
+
+## 3-Proof of the Multiplicative Rule
+
+
+
+## 4-Proof of the Permutations Rule
+
+
+
+## 5-Proof of the Partitions Rule
+
+
+
+## 6-Proof of the Combinations Rule
+
+
+
+## 7-Dust Mite Allergies
+
+### a.
+
+```{r}
+.09 + .30 + .37 +.20 +.04
+```
+
+The probabilities for Y do indeed sum to 1.
+
+### b.
+
+The probability that 3 or 4 of the homes in the sample have a dust mite level that exceeds 2 ug/g is 24%.
+
+### c.
+
+The probability that fewer than two homes in the sample have a dust mite level that exceed 2 ug/g is 39%.
+
+## 8-Downloading "Apps" to your Cell Phone
+
+### a.
+
+The probability requirements, that all the probabilities are between 0 and 1 and that all of the individual probabilities sum to 1 are satisfied. The first requirement is satisfied as the largest probability is 0.17 and the smallest probability is .005. The calculation for the second requirement is given below:
+
+```{r}
+.17 + .1 + .11 + .11 + .1 + .1 + .07 + .05 +.03 +5*.02 + 5*.01 + .005 + .005
+```
+
+### b.
+
+
+
+## 9-PHD's in Engineering
+
+### a.
+
+```{r}
+dbinom(10, 25, 0.7)
+```
+
+
+### b.
+
+```{r}
+pbinom(5, 25, 0.7)
+```
+
+### c.
+
+The mean:
+
+```{r}
+25*0.7
+```
+
+The standard deviation:
+
+```{r}
+25*0.7*0.3
+```
+
+### d.
+
+From these results I interpret that that the most likely number of PhD students that are foreign in a random sample will be between 17 and 18. The standard deviation suggests that typical values will range from around 12 to 23 in a majority of samples excluding outliers.
+
+
+## 10-Railway Track Allocation
+
+### a.
+
+```{r}
+dnbinom(5, 50, 0.2)
+```
+
+### b.
+
+```{r}
+pbinom(2, 50, 0.2)
+```
+
+## 11-Is a Product "Green"?
+
+### a.
+
+```{r}
+curve(dnorm(x, mean =0, sd=1))
+```
+
+## 12-On-Site Disposal of Hazardous Waste
+
+### a.
+
+```{r}
+plot(dhyper(0:8, 8, 201, 10), xlim=c(-1,8), ylim=c(0,1))
+```
+
+The expected number in the sample that treats hazardous waste on-site is 1. This means,.
+
+## b.
+
+```{r}
+dhyper(4, 8, 201, 10)
+```
+
+
+## 13-Deep-Draft Vessel Casualties
+
+### a.
+
+The variance of Y is .03.
+
+### b.
+
+One condition that would make the researchers' Poisson assumption plausible is the condition that the probability of a deep-draft vessel casualty is the same for all units and the probabilities are mutually exclusive. Another condition is that the number of casualties occuring in one unit of the study is idependent from the number that occurs in other units.
+
+### c.
+
+The probability that a deep-draft U.S. flag vessel will have no casualties in a 3-year time period is 97.04%.
+
+## 14-Density Function for a Continuous Random Variable Y
+
+### a.
+
+The value of c is 2/3 or approximately 0.6667.
+
+### b.
+
+The cumulative distribution function:
+
+$$ F(Y)= \frac{2}{3}(2 - y)$$
+
+### c.
+
+F(0.4) = 1.0667
+
+### d.
+
+P(.1 =< Y =< .6) = 0.55 or 55%.
+
+## 15-Time a Train is Late
+
+### a.
+
+In minutes the mean is 0 and the variance is 5.
+
+### b.
+
+In hours the mean is 0 and the variance is 0.0014.
+
+### c.
+
+In seconds the mean is 0 and the variance is 18,000.
+
+
+## 16- Alkalinity of River Water
+
+### a.
+
+The probability the specimen from the river has an alkalinity level exceeding 45 mg/L:
+
+```{r}
+1 - pnorm(45, mean=50, sd=3.2)
+```
+
+### b. 
+
+The probability the specimen from the river has an alkalinity level below 45 mg/L:
+
+```{r}
+pnorm(55, mean=50, sd=3.2)
+```
+
+### c.
+
+The probability the specimen from the river has an alkalinity level between 51 and 52 mg/L:
+
+```{r}
+pnorm(52, mean=50, sd=3.2) - pnorm(51, mean=50, sd=3.2)
+```
+
+## 17-NHTSA Crash Safety Tests
+
+The following calculations assume an approximately normal distribution.
+
+### a.
+
+The probability that the rating will fall between 500 and 700 points:
+
+```{r}
+pnorm(700, mean=605, sd=185) - pnorm(500, mean=605, sd=185)
+```
+
+### b.
+
+The probability that the rating will fall between 400 and 500 points:
+
+```{r}
+pnorm(500, mean=605, sd=185) - pnorm(400, mean=605, sd=185)
+```
+
+### c.
+
+The probability that the rating will be under 850 points:
+
+```{r}
+pnorm(850, mean=605, sd=185)
+```
+
+### d.
+
+The probability that the rating will exceed 1,000 points:
+
+```{r}
+1 - pnorm(1000, mean=605, sd=185)
+```
+
+### e.
+
+Only 10% of the crash-tested cars will exceed a rating of:
+
+```{r}
+qnorm(.9, mean=605, sd=185)
+```
+
