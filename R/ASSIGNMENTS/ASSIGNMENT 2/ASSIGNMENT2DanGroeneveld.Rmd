@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-__/17 questions answered.
+## 17/17 questions answered
 
 
 ## 1-Fingerprint Expertise
@@ -39,32 +39,45 @@ Given that a pair of matched fingerprints are not identified by a randomly selec
 
 ### a.
 
-The probability that a drug test will yield a positive result given the athlete is a user is 42.3729%.
+
+```{r}
+50/100
+```
+
+The probability that a drug test will yield a positive result given the athlete is a user is 50%.
 
 ### b.
 
-Gven the athlete is a nonuser, the probability that a testosterone test will yield a negative result is 99%.
+```{r}
+891/900
+```
+
+Given the athlete is a nonuser, the probability that a testosterone test will yield a negative result is 99%.
 
 ### c.
 
-Given that an athlete tests positive for testosterone, the probability they are actually doping is 84.7458%.
+```{r}
+(0.1 * 0.5)/(0.1*0.5 + .01*0.9)
+```
+
+Given that an athlete tests positive for testosterone, the probability they are actually doping is 84.75%.
 
 
 ## 3-Proof of the Multiplicative Rule
 
-
+Given k sets of elements with n1 in the first set, n2 in the second set, and nk in the kth set, there are n1n2...nk different samples that can be formed by taking one element from each of the k sets. To prove this, imagine creating a table with pairs that are created from two sets of elements: a1, a2,..., an and b1, b2,..., bn. If the table has n1 columns and n2 rows, the number of different combinations that can be created will be n1n2 corresponding to the number of different cells in the table.
 
 ## 4-Proof of the Permutations Rule
 
-
+Given one set of N distinct elements, you wish to choose n elements from N and arrange them in a specific order of n positions. There are N!/(N-n)! different permutations of the N elements taken n at a time. For the first of n positions you wish to fill there are N ways of filling it. Then for the second position, there are N-1 ways of filling the position and for the nth position (N-n+1) ways. Applying this with the multiplicative rule we arrive at Permutations = N!/(N-n)!
 
 ## 5-Proof of the Partitions Rule
 
-
+Given one set of N distinct elements that you wish to partition into k sets, with the first set having n1 elements, the second set having n2 elements, and the kth set having nk elements. The number of different partitions that are possible is N!/(n1!n2!...nk!); where n1+n2+...+nk = N. Let A be the number of partitions of N distinct elements into k sets. Then, find the number of ways N distinct elements can be arranged into N positions. By the permutations rule this is N!/(N-N)! = N!/0! = N!. Using the multiplicative rule we find N!=(A)(n1!)(n2!)...(nk!). Then solving this equation for A(the number of ways of partitioning N objects into k sets) we arrive at A=N!/(n1!n2!...nk!).
 
 ## 6-Proof of the Combinations Rule
 
-
+Given that you wish to select a sample of n elements from a set of N elements, the number of different samples of n elements than can be selcted from N is N!/n!(N-n)!. This equation comes quite easily from the partitions rule. Since choosing a sample of n elements from a set of N elements is the same as partitioning N elements into k =2 groups: the first group is the n that are chosen and the second group is the (N-n) that remain. Then if we apply the partitions rule we arrive at N!/n!(N-n)!
 
 ## 7-Dust Mite Allergies
 
@@ -94,9 +107,37 @@ The probability requirements, that all the probabilities are between 0 and 1 and
 .17 + .1 + .11 + .11 + .1 + .1 + .07 + .05 +.03 +5*.02 + 5*.01 + .005 + .005
 ```
 
+All the individual probabilities do indeed sum to 1.
+
 ### b.
 
+The probability that Y is greater than or equal to 10 is 14%.
 
+```{r}
+.02*4 + .01*5 + .005*2
+```
+
+### c.
+
+The mean of Y.
+
+```{r}
+y = c(0:20)
+p = c(.17, .1, .11, .11, .1, .1, .07, .05, .03, .02, .02, .02, .02, .02, .01, .01, .01, .01, .01, .005, .005)
+mean = sum(y*p)
+mean
+var = sum((1-mean)^2 * p)
+var
+```
+
+The mean of Y is 4.655.
+
+The variance of Y is 13.3590.
+
+
+### d.
+
+The interval from 0 to 6 will contain the value of Y with a probability of at least .75.
 
 ## 9-PHD's in Engineering
 
@@ -129,7 +170,7 @@ The standard deviation:
 
 ### d.
 
-From these results I interpret that that the most likely number of PhD students that are foreign in a random sample will be between 17 and 18. The standard deviation suggests that typical values will range from around 12 to 23 in a majority of samples excluding outliers.
+From these results I interpret that that the most likely number of PhD students that are foreign in a random sample will be between 17 and 18. The standard deviation suggests that typical values will range from around 12 to 23 in a majority of samples.
 
 
 ## 10-Railway Track Allocation
@@ -137,39 +178,68 @@ From these results I interpret that that the most likely number of PhD students 
 ### a.
 
 ```{r}
-dnbinom(5, 50, 0.2)
+t = c(5, 5, 5, 5, 5, 5,5 ,5 ,5 ,5)
+p = c(0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1)
+dmultinom(t, 50, p)
 ```
 
 ### b.
 
 ```{r}
-pbinom(2, 50, 0.2)
+pbinom(2, 50, 0.1)
 ```
 
 ## 11-Is a Product "Green"?
 
 ### a.
 
+A formula for the probability distribution of Y:
+
+$$p(y) = (0.40)(0.60)^{y-1}$$
+
+### b.
+
+Given that E(y) = mu = 1/p:
+
 ```{r}
-curve(dnorm(x, mean =0, sd=1))
+1/0.4
 ```
+
+
+E(y) is 2.5.
+
+
+### c.
+
+```{r}
+dgeom(1, 0.4)
+```
+
+The probability is 24%.
+
+### d.
+
+```{r}
+1 - pgeom(3, 0.4)
+```
+
+The probability is 12.96%.
 
 ## 12-On-Site Disposal of Hazardous Waste
 
 ### a.
 
 ```{r}
-plot(dhyper(0:8, 8, 201, 10), xlim=c(-1,8), ylim=c(0,1))
+qhyper(8/209, m=8, n=201, 10)
 ```
 
-The expected number in the sample that treats hazardous waste on-site is 1. This means,.
+The expected number in the sample that treats hazardous waste on-site is 0. This means that when 10 sites are chosen at random from the 209, there will typically be no sites that had on-site hazardous waste treatment.
 
 ## b.
 
 ```{r}
 dhyper(4, 8, 201, 10)
 ```
-
 
 ## 13-Deep-Draft Vessel Casualties
 
@@ -209,15 +279,15 @@ P(.1 =< Y =< .6) = 0.55 or 55%.
 
 ### a.
 
-In minutes the mean is 0 and the variance is 5.
+In minutes, the mean is 0 and the variance is 5.
 
 ### b.
 
-In hours the mean is 0 and the variance is 0.0014.
+In hours, the mean is 0 and the variance is 0.0014.
 
 ### c.
 
-In seconds the mean is 0 and the variance is 18,000.
+In seconds, the mean is 0 and the variance is 18,000.
 
 
 ## 16- Alkalinity of River Water
