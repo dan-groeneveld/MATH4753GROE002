@@ -1,0 +1,57 @@
+---
+title: "Exam 1"
+author: "Dan Groeneveld"
+date: "10/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+MTBE <- read.csv('MTBE.csv')
+MTBE
+```
+
+```{r}
+true = with(MTBE, MTBE$Aquifier == 'Bedrock' & MTBE$WellClass=='Private')
+sum(true)/length(MTBE$Aquifier == 'Bedrock')
+```
+
+```{r}
+pub = with(MTBE, MTBE$WellClass == 'Public')
+sum(pub)/length(MTBE$WellClass == 'Bedrock')
+```
+
+```{r}
+true = with(MTBE, MTBE$MTBE.Detect == 'Below Limit' & MTBE$WellClass=='Private')
+sum(true)/length(true)
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+EPA = read.csv('EPAGAS.csv')
+
+mpg <-EPA$MPG
+Z = (mpg - mean(mpg))/sd(mpg)
+abs(Z)>2
+Z
+EPA
+sd(mpg)
+```
+
+```{r}
+(abs(Z) -3
+```
+
+
+```{r}
+pnorm(13, 12, 4) - pnorm(8, 12, 4)
+```
+

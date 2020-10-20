@@ -3,6 +3,7 @@
 export(danfun)
 export(dansample)
 export(mybin)
+export(mycltdangroeneveld)
 export(myf)
 export(myncurve)
 export(myplot)
