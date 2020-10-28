@@ -1,0 +1,305 @@
+---
+title: 'Lab 8: MATH 4753'
+author: "Dan Groeneveld"
+date: '`r format(Sys.Date(),format="%A, %B %d, %Y")`'
+output: 
+  html_document:
+    df_print: paged
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+Bootstrap function
+
+```{r}
+########### bootstrap function ##################
+
+myboot2<-function(iter=10000,x,fun="mean",alpha=0.05,cx=1.5,...){  #Notice where the ... is repeated in the code
+n=length(x)   #sample size
+
+y=sample(x,n*iter,replace=TRUE)
+rs.mat=matrix(y,nr=n,nc=iter,byrow=TRUE)
+xstat=apply(rs.mat,2,fun) # xstat is a vector and will have iter values in it 
+ci=quantile(xstat,c(alpha/2,1-alpha/2))# Nice way to form a confidence interval
+# A histogram follows
+# The object para will contain the parameters used to make the histogram
+para=hist(xstat,freq=FALSE,las=1,
+main=paste("Histogram of Bootstrap sample statistics","\n","alpha=",alpha," iter=",iter,sep=""),
+...)
+
+#mat will be a matrix that contains the data, this is done so that I can use apply()
+mat=matrix(x,nr=length(x),nc=1,byrow=TRUE)
+
+#pte is the point estimate
+#This uses whatever fun is
+pte=apply(mat,2,fun)
+abline(v=pte,lwd=3,col="Black")# Vertical line
+segments(ci[1],0,ci[2],0,lwd=4)      #Make the segment for the ci
+text(ci[1],0,paste("(",round(ci[1],2),sep=""),col="Red",cex=cx)
+text(ci[2],0,paste(round(ci[2],2),")",sep=""),col="Red",cex=cx)
+
+# plot the point estimate 1/2 way up the density
+text(pte,max(para$density)/2,round(pte,2),cex=cx)
+
+invisible(list(ci=ci,fun=fun,x=x))# Some output to use if necessary
+}
+
+```
+
+A - This part creates a sample with replacement of n from the object x and then iterates the sampling the number of times given in the value iter. This object is then stored in the variable y.
+
+B - This part creates a confidence interval for a given statistic calculated from the sample y. The confidence interval percentage is specified by alpha.
+
+It is necessary that each datum is selected with equal probability when using the sample probability so that no bias is introduced when taking the sample and the sample can be representative of the population as a whole.
+
+```{r}
+set.seed(35) # This will give everyone the same sample
+sam=round(rnorm(20,mean=10,sd=4),2)
+unique(sample(sam,20,replace=TRUE))
+```
+```{r}
+unique(sample(sam,20,replace=TRUE))
+```
+```{r}
+unique(sample(sam,20,replace=TRUE))
+```
+```{r}
+unique(sample(sam,20,replace=TRUE))
+```
+```{r}
+unique(sample(sam,20,replace=TRUE))
+```
+
+I see samples of varying lengths that have a lot of values close to 10 and few values close to zero or over 20. The samples vary in length because when values are replaced, there is a chance of selecting that same value again. If that happens, the unique function will only display those values that are different and not the values that are repeated.
+
+
+```{r}
+unique(sample(sam,20,replace=FALSE))
+```
+
+```{r}
+unique(sample(sam,20,replace=FALSE))
+```
+
+```{r}
+unique(sample(sam,20,replace=FALSE))
+```
+
+```{r}
+unique(sample(sam,20,replace=FALSE))
+```
+
+```{r}
+unique(sample(sam,20,replace=FALSE))
+```
+
+I see unique samples with 20 values and values close to 10 and few values close to zero or over 20. Because this is no replacement, the sampe length is a constant 20.
+
+```{r}
+#sample(sam,21,replace=FALSE) 
+```
+
+An error message is returned because it is impossible to take a sample of 21 from a population of 20 without repleacement.
+
+## Task 3
+
+### Population mean
+
+```{r}
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+mu = 25
+mu
+myboot2(sam, iter = 10000, alpha = 0.05)
+```
+
+The point estimate is 1.12 lower than the population value.
+
+Yes, the population mean, 25, falls within the confidence interval of 21.3 to 26.45.
+
+
+```{r}
+set.seed(30) 
+sam=rchisq(20,df=3)
+v = 3
+v
+myboot2(sam, iter = 10000, alpha = 0.05)
+```
+
+The point estimate is 0.06 lower than the population value.
+
+Yes, the population mean, 3, falls within the confidence interval 2.06 to 3.87.
+
+```{r}
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+alphabeta = 2*3
+alphabeta
+myboot2(sam, iter = 10000, alpha = 0.05)
+```
+
+The point estimate is 0.5 higher than the population value.
+
+Yes, the population mean, 6, falls within the confidence interval, 5.11 to 7.96.
+
+```{r}
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+mean = 3/(3+4)
+mean
+myboot2(sam, iter = 10000, alpha = 0.05)
+```
+
+The point estimate is .0186 lower than the population value.
+
+Yes, the population mean, 0.4286, falls within the confidence interval, 0.34 to 0.47.
+
+### Population variance
+
+```{r}
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+```{r}
+set.seed(30)
+sam=rchisq(20,df=3)
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+```{r}
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+```{r}
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+## Task 4
+
+Adjusting myboot2:
+
+```{r}
+myboot2task4<-function(iter=10000,x,fun="mean",alpha=0.05,cx=1.5,...){  #Notice where the ... is repeated in the code
+n=length(x)   #sample size
+
+y=sample(x,n*iter,replace=TRUE)
+rs.mat=matrix(y,nr=n,nc=iter,byrow=TRUE)
+xstat=apply(rs.mat,2,fun) # xstat is a vector and will have iter values in it 
+ci=quantile(xstat,c(alpha/2,1-alpha/2))# Nice way to form a confidence interval
+# A histogram follows
+# The object para will contain the parameters used to make the histogram
+para=hist(xstat,freq=FALSE,las=1,
+main=paste("Histogram of Bootstrap sample statistics","\n","alpha=",alpha," iter=",iter,sep=""),
+...)
+
+#mat will be a matrix that contains the data, this is done so that I can use apply()
+mat=matrix(x,nr=length(x),nc=1,byrow=TRUE)
+
+#pte is the point estimate
+#This uses whatever fun is
+pte=apply(mat,2,fun)
+abline(v=pte,lwd=3,col="Black")# Vertical line
+segments(ci[1],0,ci[2],0,lwd=4)      #Make the segment for the ci
+text(ci[1],0,paste("(",round(ci[1],2),sep=""),col="Red",cex=cx)
+text(ci[2],0,paste(round(ci[2],2),")",sep=""),col="Red",cex=cx)
+
+# plot the point estimate 1/2 way up the density
+text(pte,max(para$density)/2,round(pte,2),cex=cx)
+
+invisible(list(ci=ci,fun=fun,x=x, xstat = xstat))# Some output to use if necessary
+}
+```
+
+```{r}
+sam=c(1,1,1,2,2,2,2,3,3,3,4,4)
+myboot = myboot2task4(x=sam, fun="median")
+xstat = myboot$xstat
+barplot(xstat)
+```
+
+The bootstrap interval estimate for the population median is 1.5 to 3.
+
+
+## Task 5
+
+Making the function population mean/median
+
+```{r}
+meandian = function(x){
+  mean(x)/median(x)
+  
+  }
+```
+
+### The 95% interval estimates
+
+```{r}
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(sam, iter = 10000, alpha = 0.05, fun = "meandian")
+```
+
+The 95% interval estimate for the population mean/median is 0.94 to 1.11.
+
+```{r}
+set.seed(30)
+sam=rchisq(20,df=3)
+myboot2(sam, iter = 10000, alpha = 0.05, fun = "meandian")
+```
+
+The 95% interval estimate for the population mean/median is 0.88 to 1.64.
+
+```{r}
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(sam, iter = 10000, alpha = 0.05, fun = "meandian")
+```
+
+The 95% interval estimate for the population mean/median is 0.87 to 1.26.
+
+```{r}
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(sam, iter = 10000, alpha = 0.05, fun = "meandian")
+```
+
+The 95% interval estimate for the population mean/median is 0.9 to 1.13.
+
+### The 70% interval estimates
+
+```{r}
+set.seed(39)
+sam=rnorm(25,mean=25,sd=10)
+myboot2(sam, iter = 10000, alpha = 0.30, fun = "meandian")
+```
+
+The 70% interval estimate for the population mean/median is 0.98 to 1.07.
+
+
+
+
+
+
+
