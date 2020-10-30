@@ -1,0 +1,33 @@
+---
+title: 'Lab 10: MATH 4753'
+author: "Dan Groeneveld"
+date: '`r format(Sys.Date(),format="%A, %B %d, %Y")`'
+output: 
+  html_document:
+    df_print: paged
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task 1
+
+```{r}
+getwd()
+```
+
+## Task 2
+
+
+
+
+
+
+

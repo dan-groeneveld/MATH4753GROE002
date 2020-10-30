@@ -297,6 +297,172 @@ myboot2(sam, iter = 10000, alpha = 0.30, fun = "meandian")
 
 The 70% interval estimate for the population mean/median is 0.98 to 1.07.
 
+```{r}
+set.seed(30)
+sam=rchisq(20,df=3)
+myboot2(sam, iter = 10000, alpha = 0.30, fun = "meandian")
+```
+
+The 70% interval estimate for the population mean/median is 1.02 to 1.46.
+
+```{r}
+set.seed(40)
+sam=rgamma(30,shape=2,scale=3)
+myboot2(sam, iter = 10000, alpha = 0.30, fun = "meandian")
+```
+
+The 70% interval estimate for the population mean/median is 0.93 to 1.09.
+
+```{r}
+set.seed(10)
+sam=rbeta(20,shape1=3,shape2=4)
+myboot2(sam, iter = 10000, alpha = 0.30, fun = "meandian")
+```
+
+The 70% interval estimate for the population mean/median is 0.95 to 1.08.
+
+## Task 6
+
+```{r}
+#?distributions()
+```
+
+Using the Cauchy distribution:
+
+```{r}
+sam=rcauchy(20, location = 2, scale =3)
+```
+
+The mean:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "mean")
+```
+
+The variance:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+Using the F distribution:
+
+```{r}
+sam = rf(20, df1 =4, df2 = 2)
+```
+
+
+The mean:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "mean")
+
+```
+
+The variance:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+Using the log-normal distribution:
+
+```{r}
+sam = rlnorm(20, meanlog=0.5, sdlog=2)
+```
+
+The mean:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "mean")
+```
+
+The variance:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+Using the Student t Distribution:
+
+```{r}
+sam = rt(20, df = 3)
+```
+
+The mean:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "mean")
+```
+
+The variance:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.20, fun = "var")
+```
+
+## Task 7
+
+
+```{r}
+set.seed(68)
+sam=rnorm(20,mean=10,sd=4)
+```
+
+Inter-quartile range:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.05, fun = "IQR")
+```
+
+Standard deviation:
+
+```{r}
+myboot2(sam, iter = 10000, alpha = 0.05, fun = "sd")
+```
+
+Calculating the 95% confidence interval using theory:
+
+```{r}
+set.seed(68)
+sam=rnorm(20,mean=10,sd=4)
+```
+
+```{r}
+ybar = mean(sam)
+sd =4
+sqrtn = sqrt(20)
+zalph2 = qnorm(1-0.05/2,mean=0,sd=1)
+L = ybar - zalph2*sd/sqrtn
+U = ybar + zalph2*sd/sqrtn
+L
+U
+```
+
+The 95% confidence interval for the mean using the theory is 8.7063 to 12.2124.
+
+Calculing the 95% confidence interval using myboot2:
+
+```{r}
+obj = myboot2(sam, iter = 10000, alpha = 0.05, fun = "mean")
+```
+
+The 95% confidence interval for the mean using myboot2() is:
+```{r}
+obj$ci
+```
+
+
+The confidence intervals calculated using different methods are comparable to each other. The interval using myboot2 is smaller by roughly 0.2 on the lower tail and 0.3 on the upper tail.
+
+## Task 8
+
+```{r}
+ddt = read.csv("DDT.csv")
+obj = MATH4753GROE002::myboot2dg(x =ddt$DDT)
+```
+
+
 
 
 
