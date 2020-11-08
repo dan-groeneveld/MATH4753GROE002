@@ -31,7 +31,7 @@ y2 <- rnorm(40, 20, 10)
 
 ### using t.test() to calculate 86% confidence interval:
 
-This is a confidence interval for mu1 - mu2: (actual value is 5)
+This is a confidence interval for mu1 - mu2: (this makes a plausible range of values taking into account the variability in the data. In the population the difference is 5, but this will not be the case for every sample that is taken.)
 
 ```{r}
 t.test(y1,y2,var.equal=TRUE, conf.level = .86)$conf.int
@@ -57,3 +57,47 @@ or
 ```
 
 You are trying to solve a problem where you are answering a question involving the difference (or similarity) between means in two different populations. Can show/compare relative sizes for both means, not their absolute size, but their relative size.
+
+
+## Chapter 7: Nov 6, 2020
+
+Dealing with samples where the assumption that the variances are equal is not true:
+
+```{r}
+y1 <-rnorm(30,20,10)
+y2 <-rnorm(40,12,20)
+```
+
+New method of making confidence intervals:
+
+First:
+
+```{r}
+var.test(y1,y2)
+```
+
+True ratio of variances is not equal to 1, means assumption that variances are equal is not true.
+
+```{r}
+var.test(y1,y2)$conf.int
+```
+
+1 is not a plausible value for the ratio of the variances.
+
+Welsh method:
+
+```{r}
+t.test(y1, y2, var.equal = FALSE)$conf.int
+```
+
+This is a confidence interval for the difference in the means. (mu1-mu2)
+
+### F-statistic
+
+F = Chi-squared1/nu1 / chisquared2/nu2
+
+$$ F = \frac{\frac{\chi_1^2}{\nu_1}}{\frac{\chi_2^2}{\nu_2}}$$
+
+
+
+
