@@ -22,5 +22,5 @@ a graph with a maximum likelihood for the specified function
 My max likelihood
 }
 \examples{
-mymaxlik(x=c(9,9,1,9,9,9),param=seq(0,1,length=1000),lfun=logbin,xlab=expression(pi),main="Binomial",cex.main=2)
+mymaxlikdg(x=c(9,9,1,9,9,9),param=seq(0,1,length=1000),lfun=logbin,xlab=expression(pi),main="Binomial",cex.main=2)
 }

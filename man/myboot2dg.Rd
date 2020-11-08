@@ -26,5 +26,5 @@ returns a graph with the confidence interval and has some hidden output, the con
 My bootstrap 2
 }
 \examples{
-myboot2(sam, iter = 10000, alpha = 0.05)
+myboot2dg(sam, iter = 10000, alpha = 0.05)
 }

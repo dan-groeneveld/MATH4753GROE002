@@ -2,7 +2,7 @@
 % Please edit documentation in R/dansample.R
 \name{dansample}
 \alias{dansample}
-\title{My (Dan Groeneveld) Sample Distribution of 10 Equallly Likely Outcomes}
+\title{My (Dan Groeneveld) Sample Distribution of 10 Equally Likely Outcomes}
 \usage{
 dansample(n, iter = 10, time = 0.5)
 }
@@ -17,8 +17,8 @@ dansample(n, iter = 10, time = 0.5)
 a barplot showing the relative likelihoods of each outcome
 }
 \description{
-My (Dan Groeneveld) Sample Distribution of 10 Equallly Likely Outcomes
+My (Dan Groeneveld) Sample Distribution of 10 Equally Likely Outcomes
 }
 \examples{
-mysample(n=1000, iter=30, time = 1)
+dansample(n=1000, iter=30, time = 0.1)
 }

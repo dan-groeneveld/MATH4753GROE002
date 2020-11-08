@@ -1,4 +1,4 @@
-#' My (Dan Groeneveld) Sample Distribution of 10 Equallly Likely Outcomes
+#' My (Dan Groeneveld) Sample Distribution of 10 Equally Likely Outcomes
 #'
 #' @param n = number of data points
 #' @param iter = number of iterations
@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' mysample(n=1000, iter=30, time = 1)
+#' dansample(n=1000, iter=30, time = 0.1)
 dansample=function(n, iter=10,time=0.5){
   for( i in 1:iter){
     #make a sample

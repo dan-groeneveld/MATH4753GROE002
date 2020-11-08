@@ -22,5 +22,5 @@ Returns a histogram of the distribution of the sum of uniforms
 Central limit approximation function for uniform distribution
 }
 \examples{
-w=myclt(n=10,iter=10000)
+w=mycltdangroeneveld(n=10,iter=10000, a = 0, b= 5)
 }

@@ -10,7 +10,7 @@
 #' @return returns a graph with the confidence interval and has some hidden output, the confidence interval, function used, and data used to display if necessary.
 #' @export
 #'
-#' @examples myboot2(sam, iter = 10000, alpha = 0.05)
+#' @examples myboot2dg(sam, iter = 10000, alpha = 0.05)
 myboot2dg<-function(iter=10000,x,fun="mean",alpha=0.05,cx=1.5,...){  #Notice where the ... is repeated in the code
   n=length(x)   #sample size
 

@@ -19,3 +19,6 @@ a table of successes and a barplot
 \description{
 My bin
 }
+\examples{
+mybin=function(iter=10,n=1000, p=0.7)
+}

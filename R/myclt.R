@@ -8,7 +8,7 @@
 #' @return Returns a histogram of the distribution of the sum of uniforms
 #' @export
 #'
-#' @examples w=myclt(n=10,iter=10000)
+#' @examples w=mycltdangroeneveld(n=10,iter=10000, a = 0, b= 5)
 mycltdangroeneveld=function(n,iter,a=0,b=5){
   y=runif(n*iter,a,b)
   data=matrix(y,nr=n,nc=iter,byrow=TRUE)
