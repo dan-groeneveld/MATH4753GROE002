@@ -37,8 +37,6 @@ This is a confidence interval for mu1 - mu2: (this makes a plausible range of va
 t.test(y1,y2,var.equal=TRUE, conf.level = .86)$conf.int
 ```
 
-Easy shit babyyyyyyyyyy
-
 ## Paired Samples
 
 Two samples that are connected, for example: two exam grades for the same student. The two different exam grades are dependent because each depends on the same student. Cannot take T-test of both exam scores because they are NOT independent.
