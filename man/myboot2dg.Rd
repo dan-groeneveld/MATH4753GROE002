@@ -27,4 +27,5 @@ My bootstrap 2
 }
 \examples{
 myboot2dg(sam, iter = 10000, alpha = 0.05)
+
 }
