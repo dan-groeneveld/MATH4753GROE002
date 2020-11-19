@@ -65,7 +65,7 @@ Please place your forth function in the r chunk in the following way:
 Once you are ready please remove the option `eval = FALSE`
 
 ```{r forth}
-MATH4753GROE002::dansample(n=1000, iter=30, time = 0.1)
+MATH4753GROE002::dansample(n=1000, iter=5, time = 0.1)
 ```
 
 # The github repository

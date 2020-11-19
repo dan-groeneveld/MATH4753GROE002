@@ -323,14 +323,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>usethis<span class="op">::</span><span class="kw">use_vignette</span>(<span class="st">&quot;my-vignette&quot;</span>)</span></code></pre></div>
 <pre><code>## √ Setting active project to &#39;C:/Users/dangr/Desktop/STATS 2020/MATH4753GROE002&#39;</code></pre>
-<div id="functions" class="section level2">
-<h2>Functions</h2>
-<div id="first-function" class="section level3">
-<h3>First function</h3>
-<p>#’ MyCI #’ #’ <span class="citation">@param</span> d the data #’ <span class="citation">@param</span> n the number of data points #’ <span class="citation">@param</span> a alpha #’ #’ <span class="citation">@return</span> a confidence interval for the population mean #’ <span class="citation">@export</span> #’ #’ <span class="citation">@examples</span> myci(d=c(1,2,3), n=3, a =0.05) &lt;-95%CI myci&lt;-function(d, n, a){ t=qt(1-a/2,n-1) ci=c() ci[1]=mean(d)-t<em>sd(d)/sqrt(n) ci[2]=mean(d)+t</em>sd(d)/sqrt(n) ci</p>
-<p>}</p>
-</div>
-</div>
+<p>I have chosen to upload 4 functions, to this package. Myci, which creates a confidence interval for the population mean for a given set of data, mycltdangroeneveld, which returns a plot of the distribution of the sum of uniforms,</p>
 
 
 

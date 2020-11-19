@@ -1,19 +1,24 @@
 ---
-title: "my-vignette"
+title: "Vignette: Dan Groeneveld"
+author: "Dan Groeneveld"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{my-vignette}
+  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r setup}
-library(MATH4753GROE002)
+```{r}
+usethis::use_vignette("my-vignette")
 ```
+
+I have chosen 4 functions from my package to upload for this assignment. myci, which creates a confidence interval for the population mean for a given set of data, mycltdangroeneveld, which returns a plot of the distribution of the sum of uniforms, myboot2dg, which creates a confidence interval for the population mean for a given set of data by iterating subsets of a sample and calculating these samples means, and dansample, which creates sample distributions for 10 equally likely events and plots a specified number of these samples at a given time interval.
+
+
+
+
+

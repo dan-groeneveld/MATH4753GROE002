@@ -16,29 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 usethis::use_vignette("my-vignette")
 ```
 
-## Functions
-
-### First function
-
-#' MyCI
-#'
-#' @param d the data
-#' @param n the number of data points
-#' @param a alpha
-#'
-#' @return a confidence interval for the population mean
-#' @export
-#'
-#' @examples myci(d=c(1,2,3), n=3, a =0.05) <-95%CI
-myci<-function(d, n, a){
-  t=qt(1-a/2,n-1)
-  ci=c()
-  ci[1]=mean(d)-t*sd(d)/sqrt(n)
-  ci[2]=mean(d)+t*sd(d)/sqrt(n)
-  ci
-
-
-}
+I have chosen to upload 4 functions, to this package. Myci, which creates a confidence interval for the population mean for a given set of data, mycltdangroeneveld, which returns a plot of the distribution of the sum of uniforms, 
 
 
 
