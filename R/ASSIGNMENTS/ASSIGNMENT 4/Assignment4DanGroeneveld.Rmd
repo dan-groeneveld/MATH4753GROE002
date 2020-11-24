@@ -1,0 +1,380 @@
+---
+title: 'Assignment 4: MATH 4753'
+author: "Dan Groeneveld"
+date: '`r format(Sys.Date(),format="%A, %B %d, %Y")`'
+output: 
+  html_document:
+    df_print: paged
+    fig_caption: true
+    highlights: pygments
+    number_sections: no
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 10/10 questions answered
+
+## 1. Extinct New Zealand Birds
+
+### a.
+
+```{r}
+NZBIRDS <- data.frame(read.csv("NZBIRDS.csv"))
+library("dplyr") 
+set.seed(28)
+sample <- sample_n(NZBIRDS, 35)
+sample
+```
+
+
+### b.
+
+```{r}
+BM = sample$Body.Mass
+mean(BM)
+sd(BM)
+```
+
+```{r}
+t.test(BM, conf.level = .95)
+```
+
+The 95% confidence interval for the mean body mass is given above in grams.
+
+### c.
+
+This means that in 95% of cases the population this sample was taken from will have a mean body mass value between the values given above in grams.
+
+### d. 
+
+Yes, the true mean, 9113 grams, is contained within the 95% confidence interval I gave above.
+
+### e.
+
+```{r}
+EL = sample$Egg.Length
+mean(EL)
+sd(EL)
+```
+
+```{r}
+t.test(EL, conf.level = .95)
+```
+
+
+The 95% confidence interval for the mean egg length is given above in mm.
+
+This means that in 95% of cases the population this sample was taken from will have a mean egg length value between the values given above in mm.
+
+Yes, the true mean, 61.06 mm, is contained within the 95% given above.
+
+### f. 
+
+```{r}
+# Since the normal approximation is valid by the CLT
+probex <- 21/38
+probnex <- 7/78
+z=qnorm(1-(.05/2),0,1)
+L = probex-probnex - z*sqrt((probex*(1-probex)/38)+(probnex*(1-probnex)/78))
+U = probex-probnex + z*sqrt((probex*(1-probex)/38)+(probnex*(1-probnex)/78))
+L
+U
+```
+
+The 95% confidence interval for difference in the proportion of flightless birds in extinct and nonextinct species is 0.2925 to 0.6332.
+
+### g.
+
+The confidence interval in f supports this theory as all values in the interval are greater than zero, meaning a greater proportion of flightless birds are to be found in extinct species.
+
+
+## 2. Strength of epoxy-repaired joints
+
+### a.
+
+Using
+
+$$ (\bar{y_1} - \bar{y_2}) \pm z_{\alpha/2}\sqrt{\frac{s_1^2}{n_1^2}+\frac{s_2^2}{n_2^2}} $$
+
+and
+
+$$ z_{\alpha/2} = 1.645$$
+
+we arrive at:
+
+```{r}
+L = (1312 - 1352) - 1.645*(sqrt(422^2/100 + 271^2/47))
+L
+U = (1312 - 1352) + 1.645*(sqrt(422^2/100 + 271^2/47))
+U
+```
+
+The 90% confidence interval between the mean shear strengths is -135.118 to 55.118 psi.
+
+### b.
+
+Using
+
+$$ \frac{s_1^2}{s_2^2}\frac{1}{F_{\alpha/2,(\nu_1,\nu_2)}}\leq\frac{\sigma_1^2}{\sigma_2^2}\leq \frac{s_1^2}{s_2^2} F_{\alpha/2,(\nu_2,\nu_1)}  $$
+
+and
+
+```{r}
+qf(1- .10/2, 100-1, 47-1)
+qf(1-.10/2, 47-1, 100-1)
+```
+
+
+$$F_{\alpha/2,(\nu_1,\nu_2)} = 1.54818, F_{\alpha/2,(\nu_2,\nu_1)} = 1.49194 $$
+
+we arrive at:
+
+```{r}
+L = 422^2/271^2 * 1/1.54818
+L
+U = 422^2/271^2 * 1.49194
+U
+```
+
+The 90% confidence interval for the ratio of variances is 1.5663 to 3.6177. Yes, because one is not contained within this interval, there is evidence suggesting that the two shear stress variances differ.
+
+## 3. MS - 7.128 pg. 367
+
+### a.
+
+Given Y is distributed normally with mu = 0 and standard deviation sigma:
+
+$$ Z = \frac{Y -\mu}{\sigma} = \frac{Y -0}{\sigma}=\frac{Y}{\sigma} $$
+
+Since this is distributed normally, 
+
+$$ Z^2 = \frac{Y^2}{\sigma^2}  $$
+
+will have a chi-square distribution with one degree of freedom.
+
+### b.
+
+The 95% confidence interval:
+
+$$P(\chi^2_{1-\alpha/2} \leq\frac{Y^2}{\sigma^2}\leq\chi^2_{\alpha/2}) = 1 - \alpha \\ = P(\frac{1}{\chi^2_{1-\alpha/2}} \geq\frac{\sigma^2}{Y^2}\geq\frac{1}{\chi^2_{\alpha/2}}) = P(\frac{1}{\chi^2_{\alpha/2}} \leq\frac{\sigma^2}{Y^2}\leq\frac{1}{\chi^2_{1-\alpha/2}}) \\ = P(\frac{Y^2}{\chi^2_{\alpha/2}} \leq\sigma^2\leq\frac{Y^2}{\chi^2_{ 1- \alpha/2}}) $$
+
+Using alpha = 0.05:
+
+$$ CI = P(\frac{Y^2}{\chi^2_{.025}} \leq\sigma^2\leq\frac{Y^2}{\chi^2_{ .975}})$$
+
+## 4. Surface Roughness of Pipe
+
+### a.
+
+The null hypothesis is that the mean surface roughness of coated interior pipes is equal to 2 micrometers.
+
+The alternative hypothesis is that the mean surface roughness of coated interior pipes is not equal to 2 micrometers.
+
+### b.
+
+The test statistic, T = 1.02 and the P-value = 0.322.
+
+### c. 
+
+The rejection region for the hypothesis test using alpha = .05:
+
+```{r}
+T = 1.02
+L = 2-T*(.52391/sqrt(20))
+U = 2+T*(.52391/sqrt(20))
+L
+U
+```
+
+The rejection region is when t is less than or equal to 1.8805 or greater than or equal to 2.1195.
+
+### d.
+
+The appropriate conclusion for this hypothesis test is that the null hypothesis, that the mean is equal to 2 micrometers, is plausible for this data set.
+
+### e. 
+
+```{r}
+qt(1-.05/2, 20-1)
+```
+
+Both the confidence interval and test statistic lead to the same conclusion about mu because the hypothesis mean (mu =2) lies within the 95% CI for the test and the t-value (t = 2.0930) also lies within the acceptance region for the test. 
+
+## 5. Dissolved organic compound in lakes
+
+### a.
+
+```{r}
+WISCLAKES = read.csv("WISCLAKES.csv")
+mu = mean(WISCLAKES$DOC)
+s = sd(WISCLAKES$DOC)
+n = length(WISCLAKES$DOC)
+t = (mu - 15)/(s/sqrt(n))
+t
+```
+
+Yes, it is reasonable to treat this as a representative sample of all Wisconsin lakes as t = -.1867 which means the p-value is high for this value of mu, meaning 15 g/m^3 is a likely value for this sample.
+
+### b.
+
+Calculating the 90% confidence interval for mu:
+
+```{r}
+tval = qt(1- .10/2, n -1)
+L = 15 - tval*(s/sqrt(n))
+L
+U = 15 + tval*(s/sqrt(n))
+U
+```
+
+Now finding the probability that t falls outside of the t-values associated with this range assuming mu actually = 14:
+
+```{r}
+ptl = (L-14)/(s/sqrt(n))
+ptu = (U-14)/(s/sqrt(n))
+prob = pt(ptl, n -1) + pt(ptu, n-1, lower.tail =FALSE)
+prob
+```
+
+The likelihood is .1222 for the test in part a detecting mean that differs from 15 g/m^3 if the actual mean was 14 g/m^3.
+
+## 6. Insectisides used in orchards
+
+```{r}
+Orchard = read.csv("ORCHARD.csv")
+fog = Orchard$RATIO[Orchard$CONDITION=="FOG"]
+clear = Orchard$RATIO[Orchard$CONDITION=="CLEAR"]
+cloudy = Orchard$RATIO[Orchard$CONDITION=="CLOUD"]
+clearcloudy = c(clear,cloudy)
+#t.test(fog, conf.level = .95)
+#t.test(clearcloudy, conf.level = .95)
+t.test(fog, clearcloudy, conf.level = .95)
+```
+
+From this test, as 0 is in the 95% confidence interval for the difference in means, we can accept the null hypothesis that Oxon/Thion ratio means are equal for foggy and clear/cloudy days.
+
+## 7. Cooling method for gas turbines
+
+### a.
+
+```{r}
+gt = read.csv("GASTURBINE.csv")
+trad = gt$HEATRATE[gt$ENGINE== "Traditional"]
+ad = gt$HEATRATE[gt$ENGINE== "Aeroderiv"]
+var.test(trad, ad, conf.level = 0.95)
+```
+
+Since the variances are not equal, as one is not in the above 95% confidence interval, this is evidence against the inference made in problem 8.39.
+
+### b.
+
+```{r}
+adv = gt$HEATRATE[gt$ENGINE== "Advanced"]
+var.test(adv, ad, conf.level = 0.95)
+```
+
+Since the variances are not equal, as one is not in the above 95% confidence interval, this is evidence against the inference made in problem 8.39.
+
+
+## 8. Mongolian desert ants 
+
+### a.
+
+The null and alternative hypotheses are as follows:
+
+$$H_0 = \frac{\sigma_{GobiDesert}^2}{\sigma_{DrySteppe}^2} = 1 \\ H_a = \frac{\sigma_{GobiDesert}^2}{\sigma_{DrySteppe}^2} \ne 1$$
+
+### b.
+
+```{r}
+ga = read.csv("GOBIANTS.csv")
+ds = ga$AntSpecies[ga$Region=="Dry Steppe"]
+gd = ga$AntSpecies[ga$Region == "Gobi Desert"]
+var.test(ds,gd, conf.level = .95)
+```
+
+The test statistic for this test is F = 1.3684.
+
+### c.
+
+The rejection region for this test is given below:
+
+```{r}
+qf(c(0.05/2,1-0.05/2), length(ds)-1,length(gd) -1)
+```
+
+### d.
+
+The approximate p-value is 0.7264.
+
+### e.
+
+From the above test, it is reasonable to assume the variances of the populations at the two sites are equal, as one falls within the 95% confidence interval given above.
+
+### f.
+
+For these test results to be valid, the variances in the populations must actually be equal and this sample must be able to be treated as representative of all ant species for both regions examined.
+
+## 9. Real-time scheduling with robots
+
+```{r}
+tp = read.csv("THRUPUT.csv")
+dif = tp$HUMAN - tp$AUTO
+t = mean(dif)/(sd(dif)/sqrt(length(dif)))
+t
+qt(1-.05/2, 7)
+```
+
+The rejection region for the mean of the human and automated method being equal is t is less than -2.365 or greater than 2.365. From this, as t = -2.6290 (which is in the rejection region), I reject the null hypothesis that the means are equal.
+
+## 10. Modifying myboot()
+
+```{r}
+set.seed(35); sam<-round(rnorm(30,mean=20,sd=3),3)
+########### bootstrap function ##################
+
+myboot<-function(iter=10000,x,fun="mean",alpha=0.05,...){  #Notice where the ... is repeated in the code
+n=length(x)   #sample size
+
+y=sample(x,n*iter,replace=TRUE)
+rs.mat=matrix(y,nr=n,nc=iter,byrow=TRUE)
+xstat=apply(rs.mat,2,fun) # xstat is a vector and will have iter values in it 
+ci=quantile(xstat,c(alpha/2,1-alpha/2))# Nice way to form a confidence interval
+# A histogram follows
+# The object para will contain the parameters used to make the histogram
+para=hist(xstat,freq=FALSE,las=1, col = rainbow(15),
+main=paste("Histogram of Bootstrap sample statistics","\n","alpha=",alpha," iter=",iter,sep=""),
+...)
+
+#mat will be a matrix that contains the data, this is done so that I can use apply()
+mat=matrix(x,nr=length(x),nc=1,byrow=TRUE)
+
+#pte is the point estimate
+#This uses whatever fun is
+pte=apply(mat,2,fun)
+abline(v=pte,lwd=3,col="Black")# Vertical line
+segments(ci[1],0,ci[2],0,lwd=4)      #Make the segment for the ci
+text(ci[1],0.1,paste("(",round(ci[1],2),sep=""),col="Red",cex=3)
+text(ci[2],0.1,paste(round(ci[2],2),")",sep=""),col="Red",cex=3)
+
+#Begin my code
+
+t = qt(1- alpha/2, n -1)
+cit = t.test(x)$conf.int
+text(cit[1],0.2,paste("(",round(cit[1],2),sep=""),col="Blue",cex=3)
+text(cit[2],0.2,paste(round(cit[2],2),")",sep=""),col="Blue",cex=3)
+# plot the point estimate 1/2 way up the density
+text(pte,max(para$density)/2,round(pte,2),cex=3)
+
+return(list(fun=fun,x=x,t=t,ci=ci,cit=cit))# Some output to use if necessary
+}
+myboot(x = sam)
+```
+
+
+
