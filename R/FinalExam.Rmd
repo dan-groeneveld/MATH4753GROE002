@@ -1,0 +1,132 @@
+---
+title: "Final Exam"
+author: "Dan Groeneveld"
+date: "12/17/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+```{r}
+qt(1-.02/2,24)
+```
+```{r}
+invq = read.csv("INVQUAD.csv")
+xe <- invq[invq$PLANT=="Electric","INV.QUAD"]
+xg <- invq[invq$PLANT=="Gas","INV.QUAD"]
+vare = var(xe)
+varg = var(xg)
+vare/varg
+```
+```{r}
+var.test(xe ,xg, conf.level=.95)
+```
+
+```{r}
+t.test(xe, xg ,conf.level=.95, var.equal = TRUE)
+```
+
+
+#Filling in values!!
+
+y = c(1,2,3) # sample of n = 3 from normal population
+mu = mean(y)
+sig = sd(y)
+tcalc = (mu -1)/(sig/sqrt(3)) # the one is the null hypothesis
+tcalc
+
+2*(1-pt(tcalc, df = n -1)) pvalue!!
+
+# T-test
+
+```{r}
+
+```
+
+
+# SLR w/ S20x
+
+```{r}
+kwhrs = read.csv("KWHRS.csv")
+x = kwhrs$SIZE
+y = kwhrs$USAGE
+ylm <- lm(y~x)
+summary(ylm)
+```
+
+```{r}
+library(s20x)
+ciReg(ylm)
+```
+
+ylm <- lm(y~x)
+summary(ylm)
+confint(ylm)
+
+
+library(s20x)
+trendscatter(CH4~D,f=0.5, data=aic)
+aic.lm = lm(CH4~D, data = aic)
+with(aic, 
+plot(CH4~D,bg="Blue",pch=21,ylim=c(0.9*min(CH4),1.1*max(CH4)),xlim=c(0.9*min(D),1.1*max(D)),main=("Trendline for data"))
+)
+abline(aic.lm)
+
+```{r}
+
+```
+
+
+# Q-LM
+
+quad.lm=lm(Height~BHDiameter + I(BHDiameter^2),data=spruce.df)
+summary(quad.lm)
+
+
+
+```{r}
+qlm = lm(y~x + I(x^2))
+summary(qlm)
+```
+
+```{r}
+1 - pnorm(11, 10, 4)
+pnorm(20,20,10) - pnorm(10,20,10)
+```
+
+
+
+```{r}
+
+1 - pnorm(1-qnorm(0.7,0,1), 0, 1)
+```
+
+
+
+
+# calculating probabilities
+
+tab1 <- with(mtbe, table(WellClass, Aquifier))
+addmargins(tab1)
+
+Bayes function:
+
+mybayes = function( ppgu, pngnu,pu=0.005) # pu = prob user, ppgu = prob pos g user (sensitivity), pngnu = prob neg g not user
+{
+
+pnu=1-pu # pu is the prior, pnu = prob not user
+pngu = 1-ppgu # pngu = prob neg given user
+ppgnu = 1-pngnu # ppgnu = prob pos given not user
+pp = pu*ppgu + pnu*ppgnu # pp = prob pos = evidence
+pugp = pu*ppgu/pp # pugp = prob user g pos
+pnugp=1-pugp # pnugp = prob not user g pos
+
+list("post" = pugp,pnugp=pnugp, prior=pu, sensitivity = ppgu, specificity = pngnu)
+}
+
+mybayes(ppgu = 0.91, pngnu = 0.82, pu = 5/100)
+

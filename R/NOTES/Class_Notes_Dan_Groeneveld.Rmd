@@ -212,5 +212,13 @@ ylm <-lm(y~x)
 summary(ylm)
 ```
 
+```{r}
+tcalc = (10.5273-9)/(5.571648/sqrt(30))
+tcalc
+```
+
+```{r}
+2*(1-pt(tcalc, df = 29)) 
+```
 
 

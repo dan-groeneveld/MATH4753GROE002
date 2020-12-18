@@ -1,5 +1,5 @@
 ---
-title: "MATH 4753 Project 2"
+title: "Modeling the Relationship Between Methane Concentration and Sample Depth in Antarctic Ice Cores"
 author: "Dan Groeneveld"
 date:  "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -26,15 +26,12 @@ output:
     toc: yes
     toc_depth: 4
 #bibliography: project.bib
-abstract: This project is all about applications of SLR to real data using R !Change
+abstract: This project seeks to investigate and determine the relationship between the concentration of methane in parts per billion by volume (ppbv) in antarctic ice cores and the depth of the sample in meters (m). The ice cores are taken from a depth beginning at 157 m and ending at a depth of 260 m. Though only about 100 m of ice was sampled, this represents approximately 1500 years of earth's history. Since methane is a powerful greenhouse gas in earth's atmoshphere, understanding how its concentration has changed in the past is crucial to understand the changes going on in our atmosphere today. Models, like the one produced in this project, offer a way to objectively examine how earth's climate today differs from how it was 100 or 1,000 years ago. It is the finding of this model, that from a depth of 157 to 260 m, CH4 concentrations decreased following a linear relationship with depth. This represents a period in earth's history when some atmospheric phenomenon caused methane concentration to increase linearly over a period of about 1500 years.
 ---
 
 <center>
 
-
-```{r}
-#![Dan Groeneveld](wayne.jpg "My Picture"){ width=20% }
-```
+![Dan Groeneveld](Dan_Groeneveld.jpeg "My Picture"){ width=70% }
 
 </center>
 
@@ -46,30 +43,21 @@ library(leaflet)
 library(dplyr)
 ```
 
-# My Video
-
-
-
 # Introduction
 
-In this project, the data was taken from the NOAA Paleoclimatology online database contains methane samples from ice cores down to a depth of 400 m. The researchers interested in this data collected it in order to model past atmospheric compositions. The data was collected by taking ice cores from ice in antarctica and then measuring the concentration of methane (CH4) in parts per billion by volume (ppbv) in each sample. In this data is also given the estimated age of the sample. Since this is a quantity estimated from depth and not directly measured, the age of the sample will not be discussed in this project except to provide context for what a certain depth means. In general, methane (CH4) concentration decreases as depth of the sample increases. The goal of this porject is to determine the relationship between sample depth (in meters) and methan concentration (in ppbv). 
+In this project, the data was taken from the NOAA Paleoclimatology online database and contains methane samples from ice cores from depths of 157 to 260 m. The researchers interested in this data collected it in order to model past atmospheric compositions. The data was collected by taking ice cores from ice in Antarctica and then measuring the concentration of methane (CH4) in parts per billion by volume (ppbv) in each sample. In this data is also given the estimated age of the sample. Since this is a quantity estimated from depth and not directly measured, the age of the sample will not be discussed in this project except to provide context for what a certain depth means. In general, methane (CH4) concentration decreases as depth of the sample increases. The goal of this project is to determine the relationship between sample depth (in meters) and methane concentration (in ppbv). 
 
-Insert picture of ice core
-and link to data source.
-The data was collected here:
+<center>
 
-```{r map, echo=FALSE, fig.align='center'}
-leaflet() %>%
-  setView(lng=-97.445717, lat=35.205894, zoom= 16) %>% 
-  addTiles() %>%
-  addMarkers(lng=-97.445717, lat=35.205894, popup="We collected grasshoppers here!! Dr Stewart helped.") 
-```
+![Above is a picture of an ice core similar to those that were taken to obtain the data for this project.](icecore-measure.jpg "My Picture"){ width=70% }
 
+</center>
 
+The data for this project can be found at https://www.ncdc.noaa.gov/paleo-search/study/15076 in the TALOS DOME TALDICE dataset.
 
 ## The Data
 
-```{r anticecore}
+```{r}
 aic = read.csv('ANTICECOREnew.csv')
 
 
@@ -80,7 +68,7 @@ datatable(
     buttons = c('copy', 'csv', 'excel', 'pdf', 'print')),
 caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table 2: ', htmltools::em('Above are given 57 measurements of the methane concentrations in ice cores along with their associated depth and estimated age.')
+    'Table 2: ', htmltools::em('Above are given 23 measurements of the methane concentrations in ice cores along with their associated depth and estimated age. It should be noted that all variables, depth, age(though not used in this project), and methane concentration vary continuously.')
   )
 ) %>%
   formatStyle('D',  color = 'red', backgroundColor = 'orange', fontWeight = 'bold')
@@ -91,8 +79,7 @@ caption = htmltools::tags$caption(
 
 ### Plot data
 
-```{r carcharacteristics, fig.height = 5, fig.cap = "MTCARS",fig.align='center',fig.cap="Graph of data with loess smoother"}
-# Change above?
+```{r}
 library(ggplot2)
 g = ggplot(aic, aes(x = D, y = CH4)) + geom_point() + ggtitle("CH4(ppbv) as a function of depth(m)")
 g
@@ -105,27 +92,31 @@ The data were collected by a team of researchers working in Antarctica and each 
 
 ## The Story Behind the Data
 
-This data represents a growing worldwide effort to understand earth's past weather and climate and the changes it underwent, to contextualize and better understand the changes going on in earth's climate today. This data begins at a depth of 116 m or approximately 436 years ago, before any influence from anthropogenic factors such as the industrial burning of fossil fuels. This allows for a baseline for the way methane concentrations have changed in the past and presents a way to understand the changes going on around us today and to classify them as normal or abnormal. 
+This data represents a growing worldwide effort to understand earth's past weather and climate and the changes it underwent, to contextualize and better understand the changes going on in earth's climate today. This data begins at a depth of 157 m, or approximately 1042 years ago, before any influence from anthropogenic factors such as the industrial burning of fossil fuels could contribute to concentration of methane in earth's atmosphere. This allows for a baseline for the way methane concentrations have changed in the past and presents a way to understand the changes going on around us today and to classify them as normal or abnormal. 
 
 ## Importance of the Data
 
-This data was collected because methane is a powerful greenhouse gas in earth's atmosphere and understanding how its concentration has changed in the past allows us to understand and contextualize the change of methane's concentration today. In order to understand the change, the relationship of methane concnetration to depth will be investigated.
+This data was collected because methane is a powerful greenhouse gas in earth's atmosphere and understanding how its concentration has changed in the past allows us to understand and contextualize the change of methane's concentration today. In order to understand the change, the relationship of methane concentration to depth will be investigated.
 
 ## My Interest in the Data
 
-I am interested in this data because it falls into the larger category of paleoclimatology. Paleoclimatology combines many of my research interests, climate, climate change, archeology, and history and is the career path I wish to pursue after obtaining my meteorology degree.
+I am interested in this data because it falls into the larger category of paleoclimatology. Paleoclimatology combines many of my research interests such as climate, climate change, archaeology, and history and is the career path I wish to pursue after obtaining my meteorology degree.
 
-### Include pictures `![](jpeg)`
+<center>
+
+![This is a picture of tree rings, one of the many forms of data that paleoclimatologists use to reconstruct earth's past climate.](treering.jpg "My Picture"){ width=70% }
+
+</center>
 
 ## Problem to be solved
 
-I wish to solve the problem of how methane concentrations vary as a function of depth. Determining this relationship will allow for the extrapolation of how methane concentrations would look today without the influence of any anthropogenic factors.
+I wish to solve the problem of how methane concentrations vary as a function of depth. Determining this relationship will allow for the extrapolation of what methane concentrations would be at depths that were not measured in this dataset but that fall within the range of measured depths.
 
 # Theory behind constuction of linear model
 
 From looking at the data, I believe that methane concentrations will generally decrease as depth of the sample increases. In order to show this, I am going to construct a linear model with depth in m as the independent variable and methane concentration in ppbv as the dependent variable.
 
-Starting with a previous understanding of linear models of the form $y_i=\mu+\epsilon_i$. Each $\epsilon$ helps to extrapolate the desired value for a given x value following the trends contained within this data. The x value has its own mean and variance, and we must assume the variances are approximately constant for a simple linear regression to be valid. The data must also vary according to a linear relationship in order for the linear model to be valid. The below is an equation that shows that each y value can be expressed as the expected value for y given an x value plus an $\epsilon$. 
+Start with a previous understanding of linear models of the form $y_i=\mu+\epsilon_i$. Each $\epsilon$ helps to extrapolate the desired value for a given x value following the trends contained within this data. The x value has its own mean and variance, and we must assume the variances are approximately constant for a simple linear regression to be valid. The data must also vary according to a linear relationship in order for the linear model to be valid. The below is an equation that shows that each y value can be expressed as the expected value for y given an x value plus an $\epsilon$. 
 
 $$
 y_i=E(y_i|x_i)+\epsilon_i
@@ -147,7 +138,7 @@ Using the above theory, we will now apply this theory to our data.
 
 ### Straight trend line 
 
-We begin with a plot to test if the data has a straight trendline.
+We begin with a plot to test if the data has a straight trend line.
 
 ```{r}
 library(s20x)
@@ -159,7 +150,7 @@ plot(CH4~D,bg="Blue",pch=21,ylim=c(0.9*min(CH4),1.1*max(CH4)),xlim=c(0.9*min(D),
 abline(aic.lm)
 ```
 
-From the above graphs, it can be seen that the data follows a mostly straight-line relationship and is approximated well by the linear model placed over the data.
+From the above graphs, it can be seen that the data follows a mostly straight-line relationship and is approximated well by the linear model placed over the data. Also, from the first plot, we can see that standard deviation for the dependent variable stays mostly constant throughout the data.
 
 
 ### Errors distributed Normally
@@ -201,12 +192,13 @@ plot(height.fit,height.res,main=("Residuals vs. Fitted values"))
 
 #### trendscatter on Residual Vs Fitted
 
-Below is given a trendline for the residuals vs. compared to the fitted values.
+Below is given a trendline for the residuals compared to the fitted values.
 
 ```{r}
 trendscatter(height.res~height.fit)
 ```
 
+Both these plots of the residuals show that there is not any significant trend in the distribution of the residuals about 0, contributing to the evidence that a linear model is valid for this data.
 
 ### Zero mean value of $\epsilon$
 
@@ -218,7 +210,7 @@ Since each ice core was taken individually and then analyzed separately, there i
 
 # Model selection 
 
-Given that the above model shows that is valid for the data, I have selected a linear model to show how methane concentrations vary with depth.
+Given that the above model was shown to be valid for the data, I have selected a linear model to show how methane concentrations vary with depth.
 
 ```{r}
 summary(aic.lm)
@@ -261,6 +253,8 @@ From this we can give the equation of the linear model:
 
 $$ CH_4 = 753.0880 - 0.6028D$$
 
+Where $CH_4$ is the concentration of methane in ppbv and D is the depth the sample was taken from in m.
+
 The multiple R-squared means that our model account for 81.97% of the variation of the dependent variable in the data. The values listed above, for the linear model are the point values for the true linear model of the population this dataset was taken from.
 
 
@@ -270,19 +264,19 @@ The multiple R-squared means that our model account for 81.97% of the variation 
 ciReg(aic.lm, conf.level = .95)
 ```
 
-The 95% confidence interval for the intercept ($\Beta_0$) is 726.7320 to 779.4441 ppbv CH4 and -0.7312 to -0.4745 ppbv CH4/m for the slope ($\Beta_1$).
+The 95% confidence interval for the intercept ($\beta_0$) is 726.7320 to 779.4441 ppbv CH4 and -0.7312 to -0.4745 ppbv CH4/m for the slope ($\beta_1$).
 
-Using our model, we can also make prediction for methane concentrations. Today, the depth of the of the ice would be 0 m and at some date in the future, 100 more m of ice will have accumulated. Using our model, we can estimate what the methane concentrations would be today and at some future date.
+Using our model, we can also make prediction for methane concentrations. Our model is only valid inside the range of depths that the model was constructed for. Below, we find the predicted CH4 concentrations for depths of 175 and 225 m.
 
 ```{r}
-predict(aic.lm, data.frame(D=c(0,-100)))
+predict(aic.lm, data.frame(D=c(175,225)))
 ```
 
-From our model, we can predict a value of 753.0880 and 813.3727 ppbv CH4 for a future date when 100 m of ice have accumulated.
+From our model, we can predict a value of 647.5899 and 617.4476 ppbv CH4 for ice cores taken from depths of 175 and 225 m respectively.
 
 ### Check on outliers using cooks plots
 
-Below, a cooks plot is given, a powerful means of finding outliers and thus improving the linear model.
+Below, a Cook's plot is given, a powerful way of finding outliers and thus improving the linear model.
 
 ```{r}
 cooks20x(aic.lm)
@@ -304,7 +298,7 @@ Above is given a plot of the data after removing the outliers along with a summa
 
 # Conclusion
 
-In conclusion, there is a strong linear relationship between methane concentration and sample depth over the specified sample time period and depth. The relationship has been proven valid for all expected qualities of a simple linear relationship and allows for extrapolation of CH4 concentrations for depths outside of the dataset. However, extrapolations should be made with caution as this model is only valid for the given range of depths and associated time period as atmospheric phenomenon such as methan concentration are always fluctuating and open to change.
+In conclusion, there is a strong linear relationship between methane concentration and sample depth over the specified sample time period and depth. The relationship has been proven valid for all expected qualities of a simple linear relationship and allows for extrapolation of CH4 concentrations for depths within the dataset. Using the linear model to see what methane concentrations would look like today without the influence of anthropogenic factors is possible, but might not give a totally accurate picture. Extrapolations outside the given range of depths should be made with caution as this model is only valid for the given range of depths and associated time period as atmospheric phenomenon such as methane concentration are always fluctuating and open to change.
 
 ## Answering the research question
 
@@ -312,20 +306,22 @@ From this project, I have determined that from a depth of approximately 157 to 2
 
 ## Suggest ways to improve model or experiment
 
-To improve the model over the given time period, I think taking additonal ice core samples from different locations would help to improve the accuracy of the linear model. I do not think that any other model would be appropriate for the range of depths I examined in this project. However, looking outside of that narrow range of depths, we see the graph given below.
+To improve the model over the given time period, I think taking additional ice core samples from different locations would help to improve the accuracy of the linear model. I do not think that any other model would be appropriate for the range of depths I examined in this project. However, looking outside of that narrow range of depths, we see the graph given below.
 
 ```{r}
 aicfull = read.csv('ANTICECOREfull.csv')
 trendscatter(CH4~D,f=0.5, data=aicfull)
 ```
 
-Here, we see the trend of methane concentrations at depths down to 1.4 km or approximately 150,000 years ago. Though there is a general decreasing trend with depth, it does not demonstrate a true linear relationship or any simple relationship that could easily be modeled. This represents the complexity of how atmospheric variables can change over large time scales and the difficulty in measuring them. While this entire period might not be able to be characterized by anyone equation or model, reducing the time scale by two orders of magnitude (from 150,000 to 1,500 years) allows us to demonstrate a period of time where methane concentrations increased linearly along with ice level build-up in antarctica. This shows the principle that while the atmosphere as an entire system may appear chaotic when looking at large scales, taking individual "slices" for research purposes allows for the creation of models that make good approximations in their respective domains. 
+Here, we see the trend of methane concentrations at depths down to 1.4 km or approximately 150,000 years ago. Though there is a general decreasing trend with depth, it does not demonstrate a true linear relationship or any simple relationship that could easily be modeled. This represents the complexity of how atmospheric variables can change over large time scales and the difficulty in measuring them. While this entire period might not be able to be characterized by any one equation or model, reducing the time scale by two orders of magnitude (from 150,000 to 1,500 years) allows us to demonstrate a period of time where methane concentrations increased linearly along with ice level build-up in Antarctica. This shows the principle that while the atmosphere as an entire system may appear chaotic when looking at large scales, taking individual "slices" for research purposes allows for the creation of models that make good approximations in their respective domains. 
 
 # References
-  
-Cite pictures + data
 
+“Ice Core.” National Centers for Environmental Information, www.ncdc.noaa.gov/sites/default/files/styles/full_page_width/public/icecore-measure.jpg?itok=b7aPvWcf. 
 
+Tree Ring. tse1.mm.bing.net/th?id=OIP.HfvC7DW_DGtRr8l8RfRdjwAAAA&amp;pid=Api.   
+
+L. Bazin, A. Landais, B. Lemieux-Dudon, H. Toyé Mahamadou Kele, D. Veres, F. Parrenin, P. Martinerie, C. Ritz, E. Capron, V. Lipenkov, M.-F. Loutre, D. Raynaud, B. Vinther, A. Svensson, S.O. Rasmussen, M. Severi, T. Blunier, M. Leuenberger, H. Fischer, V. Masson-Delmotte, J. Chappellaz, and E.Wolff. 2013. An optimized multi-proxy, multi-site Antarctic ice and gas orbital chronology (AICC2012): 120-800 ka. Climate of the Past, Vol. 9, Issue 4, pp. 1715-1731. DOI: 10.5194/cp-9-1715-2013
 
 
 
